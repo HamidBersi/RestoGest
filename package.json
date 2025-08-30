@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently -k -n BACK,FRONT -c green,cyan \"pnpm --dir Server dev\" \"pnpm --dir Client dev\""
+    "dev": "concurrently -k -n BACK,FRONT -c green,cyan \"pnpm --dir Server dev\" \"pnpm --dir Client dev\"",
+    "build": "pnpm --dir Server build && pnpm --dir Client build"
   },
   "keywords": [],
   "author": "",
