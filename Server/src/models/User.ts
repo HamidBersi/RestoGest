@@ -65,3 +65,9 @@ User.init(
     },
   }
 );
+
+User.prototype.toJSON = function () {
+  const values = { ...this.get() };
+  delete (values as any).password_hash;
+  return values;
+};

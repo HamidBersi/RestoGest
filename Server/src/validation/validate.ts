@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import joi from "joi";
 
 export function validate(
   schema: any,
@@ -6,9 +7,9 @@ export function validate(
 ) {
   return (req: Request, res: Response, next: NextFunction) => {
     const { value, error } = schema.validate(req[where], {
-      abortEarly: false, // renvoyer toutes les erreurs
-      stripUnknown: true, // retirer les champs non prévus
-      convert: true, // conversions utiles (ex: strings -> numbers si nécessaire)
+      abortEarly: false,
+      stripUnknown: true,
+      convert: true,
     });
     if (error) {
       return res.status(400).json({
@@ -18,7 +19,10 @@ export function validate(
         })),
       });
     }
-    req[where] = value; // type assertion needed here
+    req[where] = value;
     next();
   };
 }
+export const idParamsSchema = joi.object({
+  id: joi.number().integer().positive().required(),
+});

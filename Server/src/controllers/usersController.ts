@@ -73,3 +73,27 @@ export async function listUsers(
     next(err);
   }
 }
+
+export async function getOneUser(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const id = Number(req.params.id);
+    if (Number.isInteger(id) || id <= 0) {
+      return res.status(400).json({ message: "invalid id" });
+    }
+    const user = await User.findByPk(id, {
+      attributes: {
+        exclude: ["password_hash"],
+      },
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.json(user);
+  } catch (err) {
+    next(err);
+  }
+}
