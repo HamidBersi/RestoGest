@@ -6,7 +6,7 @@ services:
     container_name: restogest_db
     env_file: ./.env
     environment:
-      POSTGRES_USER: postgres
+      POSTGRES_USER: Hamidev
       POSTGRES_PASSWORD: hamidev123
       POSTGRES_DB: restogest
     ports:
@@ -28,6 +28,20 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  api:
+    image: restogest-server:prod
+    container_name: restogest-server
+    build:
+      context: ./Server
+      dockerfile: Dockerfile
+    env_file:
+      - ./Server/.env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "4000:4000"
 
 volumes:
   pgdata:

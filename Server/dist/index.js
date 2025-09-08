@@ -1,11 +1,16 @@
+import "dotenv/config";
 import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-dotenv.config();
+import usersRoute from "./Routes/usersRoute.js";
+import "./models/User.js";
 const app = express();
-app.use(cors());
 app.use(express.json());
-app.get("/api/health", (_req, res) => res.json({ ok: true }));
-const port = process.env.PORT || 4000;
-app.listen(port, () => console.log(`API on :${port}`));
-//# sourceMappingURL=index.js.map
+app.use("/api/users", usersRoute);
+app.use((req, res) => res.status(404).json({ error: "Not found" }));
+app.use((err, req, res, next) => {
+    console.error(err);
+    if (res.headersSent)
+        return next(err);
+    res.status(500).json({ error: "Internal Server Error" });
+});
+const PORT = Number(process.env.PORT) || 4000;
+app.listen(PORT, () => console.log(`API on http://localhost:${PORT}`));
