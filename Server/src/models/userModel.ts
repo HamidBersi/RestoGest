@@ -1,3 +1,4 @@
+// src/models/User.ts
 import { DataTypes, Model } from "sequelize";
 import type {
   InferAttributes,
@@ -16,10 +17,13 @@ export class User extends Model<
   declare name: string;
   declare role: "admin" | "staff";
   declare is_active: CreationOptional<boolean>;
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
+
+  // Attributs camelCase côté code
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 }
 
+console.log("createdAt attr:", User.getAttributes().createdAt);
 User.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
@@ -41,33 +45,25 @@ User.init(
       allowNull: false,
       defaultValue: true,
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
+      field: "created_at",
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
+      field: "updated_at",
     },
   },
   {
     sequelize,
     tableName: "users",
+    modelName: "User",
     timestamps: true,
     underscored: true,
     defaultScope: { attributes: { exclude: ["password_hash"] } },
-    hooks: {
-      beforeValidate(user) {
-        if (user.email) user.email = user.email.trim().toLowerCase();
-      },
-    },
   }
 );
-
-User.prototype.toJSON = function () {
-  const values = { ...this.get() };
-  delete (values as any).password_hash;
-  return values;
-};
