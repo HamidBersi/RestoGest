@@ -18,15 +18,18 @@ export async function createUser(
   next: NextFunction
 ) {
   try {
-    const { email, password, name, role } = req.body;
+    const { email, password, name, role } = req.body || {};
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email et mot de passe requis" });
+    }
 
-    // Hash Argon2 (sel inclus, format PHC)
     const password_hash = await argon2.hash(password, ARGON_OPTS);
 
     const user = await User.create(
       { email, password_hash, name, role },
       { fields: ["email", "password_hash", "name", "role"] }
     );
+
     return res.status(201).json({
       id: user.id,
       email: user.email,
@@ -36,39 +39,68 @@ export async function createUser(
       created_at: user.createdAt,
       updated_at: user.updatedAt,
     });
-  } catch (err: unknown) {
-    if (
-      typeof err === "object" &&
-      err !== null &&
-      "name" in err &&
-      (err as { name: string }).name === "SequelizeUniqueConstraintError"
-    ) {
+  } catch (err) {
+    const any = err as any;
+    console.error("createUser error:", {
+      name: any?.name,
+      message: any?.message,
+      parent: any?.parent?.message || any?.parent?.detail,
+      errors: any?.errors,
+    });
+
+    // Réponses utiles (au lieu d’un 500 générique)
+    if (any?.name === "SequelizeUniqueConstraintError") {
       return res.status(409).json({ error: "Cet email est déjà utilisé" });
     }
-    next(err);
+    if (any?.name === "SequelizeDatabaseError") {
+      return res
+        .status(400)
+        .json({ error: any?.parent?.message || any?.message });
+    }
+    if (any?.name === "SequelizeValidationError") {
+      return res
+        .status(400)
+        .json({ error: any?.errors?.map((e: any) => e.message) });
+    }
+    return next(err); // garde ton errorHandler
   }
 }
 
 export async function loginUser(req: Request, res: Response) {
-  const { email, password } = req.body;
-
-  // Vérifier les identifiants de l'utilisateur
-  const user = await User.findOne({ where: { email } });
-  if (!user) {
-    return res.status(401).json({ error: "Identifiants invalides" });
+  try {
+    const { email, password } = req.body;
+    console.log("Login attempt:", email, password);
+    const user = await User.findOne({
+      where: { email },
+      attributes: [
+        "id",
+        "email",
+        "name",
+        "role",
+        "is_active",
+        "password_hash",
+        "createdAt",
+        "updatedAt",
+      ],
+    });
+    console.log("User found:", user);
+    if (!user || !user.password_hash) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+    const isValid = await argon2.verify(user.password_hash, password);
+    console.log("Password valid?", isValid);
+    if (!isValid) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    console.log("Token generated");
+    return res.json({ token });
+  } catch (err) {
+    console.error("Erreur loginUser:", err);
+    return res.status(500).json({ message: "Internal server error" });
   }
-
-  const isValid = await argon2.verify(user.password_hash, password);
-  if (!isValid) {
-    return res.status(401).json({ error: "Identifiants invalides" });
-  }
-
-  // Générer un token JWT
-  const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
-    expiresIn: "1d",
-  });
-
-  return res.json({ token });
 }
 
 export async function listUsers(
@@ -108,8 +140,9 @@ export async function getOneUser(
   next: NextFunction
 ) {
   try {
-    const id = Number(req.params.id);
-    if (Number.isInteger(id) || id <= 0) {
+    const id = parseInt(req.params.id, 10);
+    console.log("req.params.id:", req.params.id, "Number(id):", id);
+    if (isNaN(id) || id <= 0) {
       return res.status(400).json({ message: "invalid id" });
     }
     const user = await User.findByPk(id, {
@@ -133,7 +166,7 @@ export async function updateUser(
 ) {
   try {
     const id = Number(req.params.id);
-    if (Number.isInteger(id) || id <= 0) {
+    if (isNaN(id) || id <= 0) {
       return res.status(400).json({ message: "invalid id" });
     }
     const user = await User.findByPk(id);
@@ -177,7 +210,7 @@ export async function deleteUser(
 ) {
   try {
     const id = Number(req.params.id);
-    if (!Number.isInteger(id) || id <= 0) {
+    if (isNaN(id) || id <= 0) {
       return res.status(400).json({ message: "invalid id" });
     }
     const user = await User.findByPk(id);
@@ -189,9 +222,4 @@ export async function deleteUser(
   } catch (err) {
     next(err);
   }
-}
-export function logoutUser(req: Request, res: Response) {
-  // Ici, vous pouvez gérer la déconnexion de l'utilisateur
-  // Par exemple, en supprimant le token JWT du stockage local
-  res.json({ message: "Déconnexion réussie" });
 }

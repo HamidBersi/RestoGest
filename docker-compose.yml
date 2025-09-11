@@ -42,6 +42,9 @@ services:
         condition: service_healthy
     ports:
       - "4000:4000"
+    volumes:
+      - ./Server/config:/app/config
+      - ./Server/migrations:/app/migrations
 
 volumes:
   pgdata:

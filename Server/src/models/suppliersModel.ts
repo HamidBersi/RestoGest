@@ -1,4 +1,3 @@
-// src/models/User.ts
 import { DataTypes, Model } from "sequelize";
 import type {
   InferAttributes,
@@ -7,42 +6,32 @@ import type {
 } from "sequelize";
 import sequelize from "../sequelize.js";
 
-export class User extends Model<
-  InferAttributes<User>,
-  InferCreationAttributes<User>
+export class Supplier extends Model<
+  InferAttributes<Supplier>,
+  InferCreationAttributes<Supplier>
 > {
   declare id: CreationOptional<number>;
-  declare email: string;
-  declare password_hash: string;
   declare name: string;
-  declare role: "admin" | "staff";
-  declare is_active: CreationOptional<boolean>;
+  declare email: string;
+  declare phone: string | null;
+  declare address: string | null;
 
   // Attributs camelCase côté code
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
-User.init(
+Supplier.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    name: { type: DataTypes.STRING, allowNull: false },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
       validate: { isEmail: true },
     },
-    password_hash: { type: DataTypes.STRING, allowNull: false },
-    name: { type: DataTypes.STRING, allowNull: false },
-    role: {
-      type: DataTypes.ENUM("admin", "staff"),
-      allowNull: false,
-      defaultValue: "staff",
-    },
-    is_active: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
-    },
+    phone: { type: DataTypes.STRING, allowNull: true },
+    address: { type: DataTypes.STRING, allowNull: true },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -58,10 +47,9 @@ User.init(
   },
   {
     sequelize,
-    tableName: "users",
-    modelName: "User",
+    tableName: "suppliers",
+    modelName: "Supplier",
     timestamps: true,
     underscored: true,
-    defaultScope: { attributes: { exclude: ["password_hash"] } },
   }
 );
