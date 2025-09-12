@@ -4,6 +4,7 @@ import type {
   InferCreationAttributes,
   CreationOptional,
   BelongsToManyAddAssociationMixin,
+  BelongsToManySetAssociationsMixin,
 } from "sequelize";
 import sequelize from "../sequelize.js";
 import type { Supplier } from "./suppliersModel.js";
@@ -23,6 +24,7 @@ export class Product extends Model<
   declare updatedAt: CreationOptional<Date>;
 
   public addSupplier!: BelongsToManyAddAssociationMixin<Supplier, number>;
+  public setSuppliers!: BelongsToManySetAssociationsMixin<Supplier, number>;
 }
 
 Product.init(

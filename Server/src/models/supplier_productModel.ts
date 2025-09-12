@@ -16,8 +16,8 @@ export class SupplierProduct extends Model<
   declare id: CreationOptional<number>;
   declare productId: ForeignKey<Product["id"]>;
   declare supplierId: ForeignKey<Supplier["id"]>;
-  declare supplier_product_code: string | null;
-  declare supplier_product_price: number | null;
+  declare product_supplier_code: string | null;
+  declare product_supplier_price: number | null;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -37,8 +37,8 @@ SupplierProduct.init(
       references: { model: "suppliers", key: "id" },
       field: "supplier_id",
     },
-    supplier_product_code: { type: DataTypes.STRING, allowNull: true },
-    supplier_product_price: { type: DataTypes.DECIMAL(10, 2), allowNull: true },
+    product_supplier_code: { type: DataTypes.STRING, allowNull: true },
+    product_supplier_price: { type: DataTypes.DECIMAL(10, 2), allowNull: true },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -54,7 +54,7 @@ SupplierProduct.init(
   },
   {
     sequelize,
-    tableName: "supplier_products",
+    tableName: "product-suppliers",
     timestamps: true,
     indexes: [
       {
