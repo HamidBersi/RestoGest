@@ -17,6 +17,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoute);
 app.use("/api/suppliers", suppliersRoute);
 app.use("/api/products", productsRoutes);
+app.use("/api/orders", productsRoutes);
 
 app.use((req, res) => res.status(404).json({ error: "Not found" }));
 app.use(errorHandler);
