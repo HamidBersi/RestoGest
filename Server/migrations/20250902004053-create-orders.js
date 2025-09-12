@@ -14,6 +14,11 @@ export async function up(queryInterface, Sequelize) {
       allowNull: false,
       defaultValue: 20.0,
     },
+    is_en_stock: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
     created_at: {
       type: Sequelize.DATE,
       allowNull: false,

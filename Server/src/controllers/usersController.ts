@@ -1,5 +1,5 @@
 import argon2 from "argon2";
-import { User } from "../models/userModel.js";
+import { User } from "../models/usersModel.js";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 

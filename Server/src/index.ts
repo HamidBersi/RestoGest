@@ -1,10 +1,12 @@
 import "dotenv/config";
 import express from "express";
 import usersRoute from "./Routes/usersRoutes.js";
-import "./models/userModel.js";
+import "./models/usersModel.js";
 import { errorHandler } from "./middleware/error.js";
 import authRoutes from "./Routes/authRoutes.js";
 import suppliersRoute from "./Routes/suppliersRoutes.js";
+import productsRoutes from "./Routes/productsRoutes.js";
+import "./models/associations.js";
 
 import { Request, Response, NextFunction } from "express";
 
@@ -14,6 +16,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoute);
 app.use("/api/suppliers", suppliersRoute);
+app.use("/api/products", productsRoutes);
 
 app.use((req, res) => res.status(404).json({ error: "Not found" }));
 app.use(errorHandler);
