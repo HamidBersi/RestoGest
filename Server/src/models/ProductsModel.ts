@@ -8,6 +8,7 @@ import type {
 } from "sequelize";
 import sequelize from "../sequelize.js";
 import type { Supplier } from "./suppliersModel.js";
+console.log("Sequelize instance in [NOM_DU_MODELE]:", sequelize);
 
 export class Product extends Model<
   InferAttributes<Product>,

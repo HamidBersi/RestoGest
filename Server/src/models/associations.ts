@@ -1,4 +1,5 @@
 // Associations
+import sequelize from "../sequelize.js";
 import { User } from "./usersModel.js";
 import { Order } from "./ordersModel.js";
 import { Supplier } from "./suppliersModel.js";

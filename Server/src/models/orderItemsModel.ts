@@ -1,7 +1,13 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../sequelize.js";
+import { number } from "joi";
 
-export class OrderItem extends Model {}
+export class OrderItem extends Model {
+  public orderId!: number;
+  public productId!: number;
+  public quantity!: number;
+}
+console.log("Sequelize instance in [NOM_DU_MODELE]:", sequelize);
 
 OrderItem.init(
   {
@@ -30,3 +36,4 @@ OrderItem.init(
     underscored: true,
   }
 );
+sequelize.models.OrderItem = OrderItem;
