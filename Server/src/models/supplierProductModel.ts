@@ -1,39 +1,66 @@
-import { DataTypes, Model } from "sequelize";
 import sequelize from "../sequelize.js";
+import { DataTypes, Model } from "sequelize";
+import type {
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+  ForeignKey,
+} from "sequelize";
+import { Product } from "./ProductsModel.js";
+import { Supplier } from "./suppliersModel.js";
 
-export class SupplierProduct extends Model {}
+export class SupplierProduct extends Model<
+  InferAttributes<SupplierProduct>,
+  InferCreationAttributes<SupplierProduct>
+> {
+  declare id: CreationOptional<number>;
+  declare productId: ForeignKey<Product["id"]>;
+  declare supplierId: ForeignKey<Supplier["id"]>;
+  declare product_supplier_code: string | null;
+  declare product_supplier_price: number | null;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
+}
 
 SupplierProduct.init(
   {
-    product_id: {
+    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    productId: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
+      allowNull: false,
       references: { model: "products", key: "id" },
+      field: "product_id",
     },
-    supplier_id: {
+    supplierId: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
+      allowNull: false,
       references: { model: "suppliers", key: "id" },
+      field: "supplier_id",
     },
-    supplier_product_name: {
-      type: DataTypes.STRING,
-      allowNull: true,
+    product_supplier_code: { type: DataTypes.STRING, allowNull: true },
+    product_supplier_price: { type: DataTypes.DECIMAL(10, 2), allowNull: true },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+      field: "created_at",
     },
-    supplier_product_code: {
-      type: DataTypes.STRING,
-      allowNull: true,
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+      field: "updated_at",
     },
-    purchase_price: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: true,
-    },
-    // Ajoute d'autres attributs spécifiques à la relation ici
   },
   {
     sequelize,
-    modelName: "SupplierProduct",
-    tableName: "supplier_product",
-    timestamps: false,
-    underscored: true,
+    tableName: "product-suppliers",
+    timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ["product_id", "supplier_id"],
+      },
+    ],
   }
 );

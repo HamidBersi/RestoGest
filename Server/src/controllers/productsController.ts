@@ -1,7 +1,6 @@
 import { Product } from "../models/ProductsModel.js";
 import { Request, Response, NextFunction } from "express";
 import { Supplier } from "../models/suppliersModel.js";
-import "../models/associations.js";
 import { number } from "joi";
 
 export async function createProduct(

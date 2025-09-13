@@ -39,8 +39,11 @@ export async function createOrder(req: Request, res: Response) {
     const order = await Order.create({
       ordered_by_user_id,
       supplier_id,
-      status: "pending", // Default status
+      status: "pending",
     });
+
+    console.log("setProducts" in order); // doit afficher true
+    console.log(order.setProducts); // doit afficher [Function]
 
     // Associate products with the order
     await order.setProducts(products);
@@ -52,4 +55,22 @@ export async function createOrder(req: Request, res: Response) {
   }
 }
 
-// Get all orders
+export async function getAllOrders(req: Request, res: Response) {
+  try {
+    const orders = await Order.findAll({
+      include: [
+        {
+          model: Product,
+          through: { attributes: ["name", "price"] },
+        },
+        {
+          model: Supplier,
+        },
+      ],
+    });
+    return res.status(200).json(orders);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
