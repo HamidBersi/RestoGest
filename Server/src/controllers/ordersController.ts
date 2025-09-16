@@ -37,7 +37,7 @@ export async function createOrder(req: Request, res: Response) {
       await OrderItem.create({
         order_id: order.id,
         product_id: item.id,
-        quantity: item.quantity, // <-- dynamique !
+        quantity: item.quantity,
         unit_price: product?.sale_price,
         vat_rate: product?.vat_rate,
       });
@@ -56,7 +56,7 @@ export async function getAllOrders(req: Request, res: Response) {
       include: [
         {
           model: Product,
-          through: { attributes: ["name", "price", "quantity"] },
+          through: { attributes: ["unit_price", "quantity"] },
         },
         {
           model: Supplier,
@@ -79,7 +79,7 @@ export async function getOrderById(req: Request, res: Response) {
       include: [
         {
           model: Product,
-          through: { attributes: ["name", "price", "quantity"] },
+          through: { attributes: ["unit_price", "quantity"] },
         },
         {
           model: Supplier,
@@ -92,6 +92,59 @@ export async function getOrderById(req: Request, res: Response) {
     return res.status(200).json(order);
   } catch (error) {
     console.error("Error fetching order:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+export async function updateOrderStatus(req: Request, res: Response) {
+  try {
+    const id = Number(req.params.id);
+    const { status } = req.body;
+
+    if (isNaN(id) || id <= 0) {
+      return res.status(400).json({ message: "Invalid id" });
+    }
+
+    const validStatuses = [
+      "draft",
+      "pending",
+      "received",
+      "canceled",
+      "ordered",
+    ];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid status value" });
+    }
+
+    const order = await Order.findByPk(id);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    order.status = status;
+    await order.save();
+
+    return res.status(200).json(order);
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+export async function deleteOrder(req: Request, res: Response) {
+  try {
+    const id = Number(req.params.id);
+    if (isNaN(id) || id <= 0) {
+      return res.status(400).json({ message: "Invalid id" });
+    }
+
+    const order = await Order.findByPk(id);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    await order.destroy();
+    return res.status(204).send();
+  } catch (error) {
+    console.error("Error deleting order:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 }
