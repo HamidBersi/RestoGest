@@ -6,13 +6,14 @@ import {
   updateSupplier,
   deleteSupplier,
 } from "../controllers/suppliersController.js";
+import { sanitizeBody } from "../middleware/xss.js";
 
 const router = Router();
 
-router.post("/", createSupplier);
+router.post("/", sanitizeBody(["name", "email", "phone"]), createSupplier);
 router.get("/", getAllSuppliers);
 router.get("/:id", getSupplierById);
-router.patch("/:id", updateSupplier);
+router.patch("/:id", sanitizeBody(["name", "email", "phone"]), updateSupplier);
 router.delete("/:id", deleteSupplier);
 
 export default router;

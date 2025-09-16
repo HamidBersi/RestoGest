@@ -6,15 +6,14 @@ import {
   getOrderById,
   updateOrderStatus,
 } from "../controllers/ordersController.js";
-import { validate, idParamsSchema } from "../validation/validate.js";
-import { get } from "http";
+import { sanitizeBody } from "../middleware/xss.js";
 
 const router = Router();
 
-router.post("/", createOrder);
+router.post("/", sanitizeBody(["product", "quantity"]), createOrder);
 router.get("/", getAllOrders);
 router.get("/:id", getOrderById);
-router.patch("/:id", updateOrderStatus);
+router.patch("/:id", sanitizeBody(["product", "quantity"]), updateOrderStatus);
 router.delete("/:id", deleteOrder);
 
 export default router;
