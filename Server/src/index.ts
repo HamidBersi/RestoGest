@@ -8,9 +8,16 @@ import suppliersRoute from "./Routes/suppliersRoutes.js";
 import productsRoutes from "./Routes/productsRoutes.js";
 import ordersRoutes from "./Routes/ordersRoutes.js";
 import { Request, Response, NextFunction } from "express";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:5173/",
+    credentials: true,
+  })
+);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoute);
