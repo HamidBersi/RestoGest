@@ -7,6 +7,7 @@ import authRoutes from "./Routes/authRoutes.js";
 import suppliersRoute from "./Routes/suppliersRoutes.js";
 import productsRoutes from "./Routes/productsRoutes.js";
 import ordersRoutes from "./Routes/ordersRoutes.js";
+import MockSuppliersRoutes from "./Routes/mockSuppliersRoutes.js";
 import { Request, Response, NextFunction } from "express";
 import cors from "cors";
 
@@ -24,6 +25,7 @@ app.use("/api/users", usersRoute);
 app.use("/api/suppliers", suppliersRoute);
 app.use("/api/products", productsRoutes);
 app.use("/api/orders", ordersRoutes);
+app.use("/api/mock-suppliers", MockSuppliersRoutes);
 
 app.use((req, res) => res.status(404).json({ error: "Not found" }));
 app.use(errorHandler);
