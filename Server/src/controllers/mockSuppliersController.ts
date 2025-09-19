@@ -1,20 +1,11 @@
 import { Request, Response } from "express";
 import * as mockApi from "../services/mockSupplierApi.js";
-import {
-  fetchSupplierProducts,
-  fetchSupplierInfo,
-} from "../services/mockSupplierApi.js";
-import {
-  fetchSupplier2Info,
-  fetchSupplier2Products,
-} from "../services/mockSupplier2Api.js";
 
 type SupplierApi = {
   info: () => Promise<any>;
   products: () => Promise<any[]>;
 };
 
-// Map dynamique des suppliers simulés
 const suppliersData = {
   "1": {
     info: mockApi.fetchSupplierInfo,
