@@ -1,13 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Toaster, toast } from "sonner";
+import Header from "./Components/Header";
 
 export default function App() {
   return (
     <>
-      <Toaster richColors position="top-right" />
-      <div className="p-4 flex gap-2">
-        <Button onClick={() => toast.success("OK !")}>Test</Button>
-      </div>
+      <Header />
     </>
   );
 }
