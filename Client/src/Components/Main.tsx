@@ -10,8 +10,8 @@ import {
 import FeatureCard from "./FeatureCard";
 const Main = () => {
   return (
-    <main>
-      <div className="flex flex-col items-center justify-center h-screen bg-blue-50">
+    <main className="bg-blue-50">
+      <div className="flex flex-col items-center justify-center py-10">
         <h2 className="text-2xl font-bold text-center">
           Gérez votre cuisine comme un{" "}
           <span className="text-blue-600 block text-center">Professionnel</span>
@@ -20,7 +20,7 @@ const Main = () => {
           <span>RestoGest</span> votre assistant ultime pour optimiser la
           gestion de votre restaurant.
         </p>
-        <div className="flex gap-4 mt-4">
+        <div className="flex gap-4 mt-8">
           <Button asChild variant="default">
             <Link
               to="/login"
@@ -43,7 +43,7 @@ const Main = () => {
           caommande à la l'analyse des performances.
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-10 py-10 bg-gray-50">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-10 ">
         <FeatureCard
           icon={<ShoppingCart size={24} className="text-blue-600" />}
           title="Gestion des commandes"
@@ -68,7 +68,7 @@ const Main = () => {
         />
       </div>
 
-      <div className="flex flex-col items-center justify-center p-10 bg-white">
+      <div className="flex flex-col items-center justify-center p-10">
         <h3 className="text-lg font-bold text-center">
           Pourquoi choisir RestoGest ?
         </h3>
