@@ -1,13 +1,9 @@
-import Header from "./Components/Header";
-import Main from "./Components/Main";
-import Footer from "./Components/Footer";
+import LandingPage from "./Components/Pages/LandingPage";
 
 export default function App() {
   return (
     <>
-      <Header />
-      <Main />
-      <Footer />
+      <LandingPage />
     </>
   );
 }
