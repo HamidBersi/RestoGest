@@ -43,7 +43,7 @@ const RegisterForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 p-6 max-w-sm m-auto bg-white rounded shadow"
+      className="flex flex-col gap-4 px-6 py-10 max-w-sm m-auto bg-blue-50 rounded-lg shadow-2xl h-full"
     >
       <input
         name="name"
@@ -51,7 +51,7 @@ const RegisterForm = () => {
         placeholder="Nom"
         value={form.name}
         onChange={handleChange}
-        className="border p-2 rounded"
+        className="py-2 pl-3 rounded-2xl bg-white"
         required
       />
       <input
@@ -60,14 +60,14 @@ const RegisterForm = () => {
         placeholder="Email"
         value={form.email}
         onChange={handleChange}
-        className="border p-2 rounded"
+        className="py-2 pl-3 rounded-2xl bg-white"
         required
       />
       <select
         name="role"
         value={form.role}
         onChange={handleChange}
-        className="border p-2 rounded"
+        className="py-2 pl-3 rounded-2xl bg-white text-gray-500"
         required
       >
         <option value="">Sélectionnez un rôle</option>
@@ -81,17 +81,22 @@ const RegisterForm = () => {
         placeholder="Mot de passe"
         value={form.password}
         onChange={handleChange}
-        className="border p-2 rounded"
+        className="py-2 pl-3 rounded-2xl bg-white"
         required
       />
       <input
         name="avatar"
         type="file"
         accept="image/*"
+        placeholder="Choisi une photo de profil"
         onChange={handleChange}
-        className="border p-2 rounded"
+        className="py-2 pl-3 rounded-2xl bg-white text-gray-500"
       />
-      <Button type="submit" variant="default">
+      <Button
+        type="submit"
+        variant="default"
+        className="rounded-2xl bg-blue-600 cursor-pointer hover:bg-blue-700 text-white"
+      >
         S'inscrire
       </Button>
     </form>
