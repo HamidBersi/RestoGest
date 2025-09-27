@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/Components/ui/button";
+import { toast } from "sonner";
 
 const RegisterForm = () => {
   const [form, setForm] = useState({
@@ -34,9 +35,9 @@ const RegisterForm = () => {
     });
     const result = await res.json();
     if (res.ok) {
-      alert("Registration successful!");
+      toast.success("Registration successful!");
     } else {
-      alert(result.error || "Registration failed");
+      toast.error(result.error || "Registration failed");
     }
   };
 
@@ -51,7 +52,7 @@ const RegisterForm = () => {
         placeholder="Nom"
         value={form.name}
         onChange={handleChange}
-        className="py-2 pl-3 rounded-2xl bg-white"
+        className="py-2 pl-3 rounded-2xl bg-white text-sm"
         required
       />
       <input
@@ -60,20 +61,19 @@ const RegisterForm = () => {
         placeholder="Email"
         value={form.email}
         onChange={handleChange}
-        className="py-2 pl-3 rounded-2xl bg-white"
+        className="py-2 pl-3 rounded-2xl bg-white text-sm"
         required
       />
       <select
         name="role"
         value={form.role}
         onChange={handleChange}
-        className="py-2 pl-3 rounded-2xl bg-white text-gray-500"
+        className="py-2 pl-3 rounded-2xl bg-white text-gray-500 text-sm"
         required
       >
         <option value="">Sélectionnez un rôle</option>
-        <option value="chef">Chef</option>
-        <option value="serveur">Serveur</option>
-        <option value="manager">Manager</option>
+        <option value="admin">Admin</option>
+        <option value="staff">Membre</option>
       </select>
       <input
         name="password"
@@ -81,7 +81,7 @@ const RegisterForm = () => {
         placeholder="Mot de passe"
         value={form.password}
         onChange={handleChange}
-        className="py-2 pl-3 rounded-2xl bg-white"
+        className="py-2 pl-3 rounded-2xl bg-white text-sm"
         required
       />
       <input
@@ -90,7 +90,7 @@ const RegisterForm = () => {
         accept="image/*"
         placeholder="Choisi une photo de profil"
         onChange={handleChange}
-        className="py-2 pl-3 rounded-2xl bg-white text-gray-500"
+        className="py-2 pl-3 rounded-2xl bg-white text-gray-500 text-sm"
       />
       <Button
         type="submit"
