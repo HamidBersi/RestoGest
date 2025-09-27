@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Register from "./Pages/Register";
-import LandingPage from "./Pages/LandingPage";
+import LandingPage from "./Pages/Landing";
+import LoginPage from "./Pages/Login";
 import { Toaster } from "sonner";
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </>
   );
