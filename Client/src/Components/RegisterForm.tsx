@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/Components/ui/button";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const [form, setForm] = useState({
@@ -10,6 +11,7 @@ const RegisterForm = () => {
     password: "",
     avatar: null as File | null,
   });
+  const navigate = useNavigate();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -36,6 +38,7 @@ const RegisterForm = () => {
     const result = await res.json();
     if (res.ok) {
       toast.success("Registration successful!");
+      navigate("/login");
     } else {
       toast.error(result.error || "Registration failed");
     }

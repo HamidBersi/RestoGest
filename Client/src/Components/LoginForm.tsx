@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Button } from "@/Components/ui/button";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import type e from "express";
 
 const LoginForm = () => {
   const [form, setForm] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -23,6 +25,7 @@ const LoginForm = () => {
     const result = await res.json();
     if (res.ok) {
       toast.success("Connexion réussie !");
+      navigate("/home");
     } else {
       toast.error(result.error || "Échec de la connexion");
     }
