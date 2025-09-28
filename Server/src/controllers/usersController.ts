@@ -48,7 +48,6 @@ export async function createUser(
       errors: any?.errors,
     });
 
-    // Réponses utiles (au lieu d’un 500 générique)
     if (any?.name === "SequelizeUniqueConstraintError") {
       return res.status(409).json({ error: "Cet email est déjà utilisé" });
     }
@@ -62,14 +61,14 @@ export async function createUser(
         .status(400)
         .json({ error: any?.errors?.map((e: any) => e.message) });
     }
-    return next(err); // garde ton errorHandler
+    return next(err);
   }
 }
 
 export async function loginUser(req: Request, res: Response) {
+  console.log("LoginUser called", req.body);
   try {
     const { email, password } = req.body;
-    console.log("Login attempt:", email, password);
     const user = await User.findOne({
       where: { email },
       attributes: [

@@ -11,7 +11,7 @@ const router = Router();
 
 router.get("/", listUsers);
 router.get("/:id", getOneUser);
-router.patch("/:id", sanitizeBody(["username", "email", "password"]), updateUser);
+router.patch("/:id", sanitizeBody(["name", "email", "password"]), updateUser);
 router.delete("/:id", deleteUser);
 
 export default router;

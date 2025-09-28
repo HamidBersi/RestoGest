@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/Components/ui/button";
 import { toast } from "sonner";
+import type e from "express";
 
 const LoginForm = () => {
-  const [form, setForm] = useState({ identifier: "", password: "" });
+  const [form, setForm] = useState({ email: "", password: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -14,7 +15,10 @@ const LoginForm = () => {
     const res = await fetch("http://localhost:4000/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+        email: form.email,
+        password: form.password,
+      }),
     });
     const result = await res.json();
     if (res.ok) {
@@ -33,7 +37,7 @@ const LoginForm = () => {
         name="identifier"
         type="text"
         placeholder="Email ou nom d'utilisateur"
-        value={form.identifier}
+        value={form.email}
         onChange={handleChange}
         className="py-2 pl-3 w-[95%] rounded-2xl bg-white text-xs"
         required
