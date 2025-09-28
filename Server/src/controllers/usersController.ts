@@ -66,7 +66,6 @@ export async function createUser(
 }
 
 export async function loginUser(req: Request, res: Response) {
-  console.log("LoginUser called", req.body);
   try {
     const { email, password } = req.body;
     const user = await User.findOne({
@@ -82,19 +81,19 @@ export async function loginUser(req: Request, res: Response) {
         "updatedAt",
       ],
     });
-    console.log("User found:", user);
+
     if (!user || !user.password_hash) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const isValid = await argon2.verify(user.password_hash, password);
-    console.log("Password valid?", isValid);
+
     if (!isValid) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
       expiresIn: "1d",
     });
-    console.log("Token generated");
+
     return res.json({ token });
   } catch (err) {
     console.error("Erreur loginUser:", err);
@@ -140,7 +139,7 @@ export async function getOneUser(
 ) {
   try {
     const id = parseInt(req.params.id, 10);
-    console.log("req.params.id:", req.params.id, "Number(id):", id);
+
     if (isNaN(id) || id <= 0) {
       return res.status(400).json({ message: "invalid id" });
     }

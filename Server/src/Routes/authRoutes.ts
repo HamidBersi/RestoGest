@@ -7,7 +7,6 @@ import multer from "multer";
 const upload = multer();
 
 const router = Router();
-console.log("authRoutes loaded");
 
 router.post(
   "/register",

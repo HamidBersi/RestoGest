@@ -7,7 +7,6 @@ export class OrderItem extends Model {
   public productId!: number;
   public quantity!: number;
 }
-console.log("Sequelize instance in [NOM_DU_MODELE]:", sequelize);
 
 OrderItem.init(
   {

@@ -11,7 +11,7 @@ import sequelize from "../sequelize.js";
 import { User } from "./usersModel.js";
 import { Supplier } from "./suppliersModel.js";
 import { Product } from "./ProductsModel.js";
-console.log("Sequelize instance in [NOM_DU_MODELE]:", sequelize); // adjust path as needed
+// adjust path as needed
 
 export class Order extends Model<
   InferAttributes<Order>,
@@ -68,4 +68,4 @@ Order.init(
     timestamps: true,
   }
 );
-console.log("setProducts" in Order.prototype); // doit afficher true
+// doit afficher true

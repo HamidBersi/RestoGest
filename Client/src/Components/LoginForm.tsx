@@ -34,7 +34,7 @@ const LoginForm = () => {
       className="flex flex-col gap-4 px-6 py-10 m-auto mt-10 bg-blue-50 rounded-lg shadow-2xl w-[50%]"
     >
       <input
-        name="identifier"
+        name="email"
         type="text"
         placeholder="Email ou nom d'utilisateur"
         value={form.email}
