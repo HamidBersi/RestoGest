@@ -18,7 +18,7 @@ export async function createUser(
   next: NextFunction
 ) {
   try {
-    const { email, password, name, role } = req.body || {};
+    const { email, password, name, role, avatar } = req.body || {};
     if (!email || !password) {
       return res.status(400).json({ message: "Email et mot de passe requis" });
     }
@@ -26,8 +26,8 @@ export async function createUser(
     const password_hash = await argon2.hash(password, ARGON_OPTS);
 
     const user = await User.create(
-      { email, password_hash, name, role },
-      { fields: ["email", "password_hash", "name", "role"] }
+      { email, password_hash, name, role, avatar },
+      { fields: ["email", "password_hash", "name", "role", "avatar"] }
     );
 
     return res.status(201).json({
@@ -36,6 +36,7 @@ export async function createUser(
       name: user.name,
       role: user.role,
       is_active: user.is_active,
+      avatar: user.avatar,
       created_at: user.createdAt,
       updated_at: user.updatedAt,
     });
@@ -232,5 +233,33 @@ export async function deleteUser(
     return res.status(204).send();
   } catch (err) {
     next(err);
+  }
+}
+
+export async function me(req: Request, res: Response) {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ error: "Unauthorized" });
+
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      throw new Error("JWT_SECRET is not defined");
+    }
+    const decoded = jwt.verify(token, secret);
+    let userId: number | undefined;
+    if (typeof decoded === "object" && decoded !== null && "id" in decoded) {
+      userId = (decoded as { id: number }).id;
+    }
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    const user = await User.findByPk(userId, {
+      attributes: ["id", "name", "email", "role", "avatar"],
+    });
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    res.json({ user });
+  } catch (err) {
+    res.status(401).json({ error: "Unauthorized" });
   }
 }

@@ -17,6 +17,7 @@ export class User extends Model<
   declare name: string;
   declare role: "admin" | "staff";
   declare is_active: CreationOptional<boolean>;
+  declare avatar: string | null;
 
   // Attributs camelCase côté code
   declare createdAt: CreationOptional<Date>;
@@ -38,6 +39,11 @@ User.init(
       allowNull: false,
       defaultValue: "staff",
     },
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
     is_active: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

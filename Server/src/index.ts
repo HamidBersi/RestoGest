@@ -10,8 +10,10 @@ import ordersRoutes from "./Routes/ordersRoutes.js";
 import MockSuppliersRoutes from "./Routes/mockSuppliersRoutes.js";
 import { Request, Response, NextFunction } from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({

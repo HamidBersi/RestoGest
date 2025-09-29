@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUser, loginUser } from "../controllers/usersController.js";
+import { createUser, loginUser, me } from "../controllers/usersController.js";
 import { validate } from "../validation/validate.js";
 import { createUserSchema } from "../validation/user.joi.js";
 import { sanitizeBody } from "../middleware/xss.js";
@@ -16,5 +16,6 @@ router.post(
   createUser
 );
 router.post("/login", sanitizeBody(["email", "password"]), loginUser);
+router.get("/me", me);
 
 export default router;
