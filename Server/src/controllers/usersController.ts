@@ -94,7 +94,20 @@ export async function loginUser(req: Request, res: Response) {
       expiresIn: "1d",
     });
 
-    return res.json({ token });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000, // 1 jour
+    });
+    return res.json({
+      user: {
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar,
+      },
+    });
   } catch (err) {
     console.error("Erreur loginUser:", err);
     return res.status(500).json({ message: "Internal server error" });
