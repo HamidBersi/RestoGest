@@ -1,10 +1,13 @@
 import SideBar from "@/Components/SideBar";
-const Home = () => {
+import HomeMain from "@/Components/HomeMain"; // ou ton composant central
+
+export default function HomePage() {
   return (
-    <div>
+    <div className="flex min-h-screen bg-white">
       <SideBar />
+      <div className="flex-1 flex items-center justify-center">
+        <HomeMain />
+      </div>
     </div>
   );
-};
-
-export default Home;
+}
