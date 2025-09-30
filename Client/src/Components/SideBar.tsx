@@ -6,6 +6,7 @@ import {
   LogOut,
   User,
 } from "lucide-react";
+import { useUser } from "../Context/UserContext";
 
 type SideBarProps = {
   name: string;
@@ -15,6 +16,9 @@ type SideBarProps = {
 };
 
 const SideBar = ({ name, email, role, avatar }: SideBarProps) => {
+  const { user } = useUser();
+
+  if (!user) return null;
   return (
     <aside className="flex flex-col h-screen w-[30%] border-r bg-blue-50">
       <div className="flex flex-col items-center py-8 border-b">

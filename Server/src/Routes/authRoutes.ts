@@ -11,7 +11,7 @@ const router = Router();
 router.post(
   "/register",
   upload.single("avatar"),
-  sanitizeBody(["name", "email", "role", "password"]),
+  sanitizeBody(["name", "email", "role", "password", "avatar"]),
   validate(createUserSchema),
   createUser
 );
