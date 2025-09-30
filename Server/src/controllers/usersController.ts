@@ -1,6 +1,6 @@
 import argon2 from "argon2";
 import { User } from "../models/usersModel.js";
-import { Request, Response, NextFunction } from "express";
+import e, { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev_secret";
@@ -97,7 +97,7 @@ export async function loginUser(req: Request, res: Response) {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production" ? true : false,
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000, // 1 jour
     });

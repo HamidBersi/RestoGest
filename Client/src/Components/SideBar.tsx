@@ -8,24 +8,19 @@ import {
 } from "lucide-react";
 import { useUser } from "../Context/UserContext";
 
-type SideBarProps = {
-  name: string;
-  email: string;
-  role: string;
-  avatar?: string;
-};
-
-const SideBar = ({ name, email, role, avatar }: SideBarProps) => {
+const SideBar = () => {
   const { user } = useUser();
+
+  console.log("Sidebar user:", user);
 
   if (!user) return null;
   return (
-    <aside className="flex flex-col h-screen w-[30%] border-r bg-blue-50">
+    <aside className="flex flex-col h-screen w-50 border-r bg-blue-50">
       <div className="flex flex-col items-center py-8 border-b">
         <div className="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-white text-3xl mb-2">
-          {avatar ? (
+          {user.avatar ? (
             <img
-              src={avatar}
+              src={user.avatar}
               alt="Avatar"
               className="w-full h-full rounded-full"
             />
@@ -33,22 +28,22 @@ const SideBar = ({ name, email, role, avatar }: SideBarProps) => {
             <User size={32} />
           )}
         </div>
-        <div className="font-semibold text-lg">{name}</div>
+        <div className="font-semibold text-lg">{user.name}</div>
         <div className="flex items-center gap-2 mt-1">
           <span className="bg-gray-100 text-gray-700 text-xs px-2 py-0.5 rounded">
-            {role}
+            {user.role}
           </span>
         </div>
-        <div className="text-gray-500 text-sm mt-1">{email}</div>
+        <div className="text-gray-500 text-sm mt-1">{user.email}</div>
       </div>
 
       <nav className="flex-1 px-6 py-4">
-        <ul className="flex flex-col gap-4">
+        <ul className="flex flex-col gap-4 ">
           <li className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg px-3 py-2">
             <ShoppingCart size={15} />
             <span>Commandes</span>
           </li>
-          <li className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg px-3 py-2">
+          <li className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg px-3 py-2 hover: w-[99%] m-auto">
             <Truck size={15} />
             <span>Fournisseurs</span>
           </li>
@@ -56,7 +51,7 @@ const SideBar = ({ name, email, role, avatar }: SideBarProps) => {
             <Settings size={15} />
             <span>Paramètres</span>
           </li>
-          <li className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-3xl py-2 px-1 w-[99%]">
+          <li className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg py-2 px-1 w-[99%]">
             <Heart size={15} />
             <span>Mes favoris</span>
           </li>
