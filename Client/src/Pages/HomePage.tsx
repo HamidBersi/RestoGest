@@ -1,5 +1,5 @@
 import SideBar from "@/Components/SideBar";
-import HomeMain from "@/Components/HomeMain"; // ou ton composant central
+import HomeMain from "@/Components/Home"; // ou ton composant central
 
 export default function HomePage() {
   return (

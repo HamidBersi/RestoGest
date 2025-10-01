@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import { UserProvider } from "./Context/UserContext";
-import Register from "./Pages/Register";
-import LandingPage from "./Pages/Landing";
-import LoginPage from "./Pages/Login";
+import Register from "./Pages/RegisterPage";
+import LandingPage from "./Pages/LandingPage";
+import LoginPage from "./Pages/LoginPage";
 import { Toaster } from "sonner";
-import Home from "./Pages/Home";
+import Home from "./Pages/HomePage";
 
 export default function App() {
   return (
