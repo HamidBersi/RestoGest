@@ -7,7 +7,7 @@ import {
   User,
 } from "lucide-react";
 import { useUser } from "../Context/UserContext";
-
+import { Link } from "react-router-dom";
 const SideBar = () => {
   const { user } = useUser();
 
@@ -38,22 +38,42 @@ const SideBar = () => {
       </div>
 
       <nav className="flex-1 px-6 py-4">
-        <ul className="flex flex-col gap-4 ">
-          <li className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg px-3 py-2">
-            <ShoppingCart size={15} />
-            <span>Commandes</span>
+        <ul className="flex flex-col gap-4">
+          <li>
+            <Link
+              to="/orders"
+              className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg px-3 py-2"
+            >
+              <ShoppingCart size={15} />
+              <span>Commandes</span>
+            </Link>
           </li>
-          <li className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg px-3 py-2 hover: w-[99%] m-auto">
-            <Truck size={15} />
-            <span>Fournisseurs</span>
+          <li>
+            <Link
+              to="/suppliers"
+              className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg px-3 py-2"
+            >
+              <Truck size={15} />
+              <span>Fournisseurs</span>
+            </Link>
           </li>
-          <li className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg px-3 py-2">
-            <Settings size={15} />
-            <span>Paramètres</span>
+          <li>
+            <Link
+              to="/settings"
+              className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg px-3 py-2"
+            >
+              <Settings size={15} />
+              <span>Paramètres</span>
+            </Link>
           </li>
-          <li className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg py-2 px-1 w-[99%]">
-            <Heart size={15} />
-            <span>Mes favoris</span>
+          <li>
+            <Link
+              to="/favorites"
+              className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg py-2 px-1 w-[99%]"
+            >
+              <Heart size={15} />
+              <span>Mes favoris</span>
+            </Link>
           </li>
         </ul>
       </nav>
