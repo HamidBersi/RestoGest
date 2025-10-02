@@ -16,6 +16,12 @@ const suppliersData = {
     products: mockApi.fetchSupplier2Products,
   },
 };
+export async function getAllMockSuppliers(req: Request, res: Response) {
+  const allSuppliers = await Promise.all(
+    Object.values(suppliersData).map((supplier) => supplier.info())
+  );
+  res.json(allSuppliers);
+}
 
 export async function getSupplierXInfo(req: Request, res: Response) {
   const supplierId = req.params.id;

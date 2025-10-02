@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SupplierCard from "../Components/SupplierCard";
 
 const SuppliersPage = () => {
@@ -7,10 +7,11 @@ const SuppliersPage = () => {
   >([]);
 
   useEffect(() => {
-    // Simule un fetch des fournisseurs
-    fetch("http://localhost:4000/api/suppliers", { credentials: "include" })
+    fetch("http://localhost:4000/api/mock-suppliers/mock", {
+      credentials: "include",
+    })
       .then((res) => res.json())
-      .then((data) => setSuppliers(data.suppliers || []))
+      .then((data) => setSuppliers(data || []))
       .catch((err) => console.error("Failed to fetch suppliers:", err));
   }, []);
 

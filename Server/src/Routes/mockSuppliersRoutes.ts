@@ -10,10 +10,11 @@ import {
   getSupplierXInfo,
   getSupplierXOneProduct,
   getSupplierXProducts,
+  getAllMockSuppliers,
 } from "../controllers/mockSuppliersController.js";
 
 const router = Router();
-
+router.get("/mock", getAllMockSuppliers);
 router.get("/mock/:id/info", getSupplierXInfo);
 router.get("/mock/:id/products", getSupplierXProducts);
 router.get("/mock/:id/products/:productId", getSupplierXOneProduct);
