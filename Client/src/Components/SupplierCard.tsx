@@ -2,10 +2,14 @@ type Supplier = {
   id: number;
   name: string;
   contact: string;
+  sloganImage?: string;
 };
 
 const SupplierCard = ({ supplier }: { supplier: Supplier }) => (
-  <div className="bg-white rounded shadow p-4 flex flex-col mb-4">
+  <div className="bg-white rounded shadow p-4 flex flex-col mb-4 items-center">
+    {supplier.sloganImage && (
+      <img src={supplier.sloganImage} alt="Slogan-image" />
+    )}
     <span className="font-semibold">{supplier.name}</span>
     <span className="text-gray-500 text-sm">{supplier.contact}</span>
   </div>

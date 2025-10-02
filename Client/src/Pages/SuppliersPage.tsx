@@ -17,8 +17,8 @@ const SuppliersPage = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Fournisseurs</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <h1 className="text-2xl font-bold mb-4 text-center">Fournisseurs</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {suppliers.map((supplier) => (
           <SupplierCard key={supplier.id} supplier={supplier} />
         ))}

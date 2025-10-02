@@ -1,5 +1,4 @@
 export async function fetchSupplierProducts() {
-  // Simule une grande liste de produits fournisseur
   return [
     {
       id: "A1",
@@ -213,11 +212,11 @@ export async function fetchSupplierInfo() {
     address: "12 rue des Marchés, 75000 Paris",
     phone: "01 23 45 67 89",
     website: "https://fournisseurpro.com",
+    sloganImage: "https://fr.pngtree.com/so/food-logo",
   };
 }
 
 export async function fetchSupplier2Products() {
-  // Simule une autre liste de produits fournisseur
   return [
     {
       id: "X1",
@@ -289,5 +288,7 @@ export async function fetchSupplier2Info() {
     address: "45 avenue des Fleurs, 75000 Paris",
     phone: "01 98 76 54 32",
     website: "https://fournisseurfraicheur.com",
+    sloganImage:
+      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=200&q=80",
   };
 }

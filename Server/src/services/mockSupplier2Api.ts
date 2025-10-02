@@ -1,5 +1,4 @@
 export async function fetchSupplier2Products() {
-  // Simule une autre liste de produits fournisseur
   return [
     {
       id: "X1",
@@ -71,5 +70,7 @@ export async function fetchSupplier2Info() {
     address: "45 avenue des Fleurs, 75000 Paris",
     phone: "01 98 76 54 32",
     website: "https://fournisseurfraicheur.com",
+    sloganImage:
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=200&q=80",
   };
 }
