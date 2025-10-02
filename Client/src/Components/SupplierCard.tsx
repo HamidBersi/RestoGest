@@ -20,6 +20,14 @@ const SupplierCard = ({ supplier }: { supplier: Supplier }) => (
     <Link to={"mailto:" + supplier.contact} className="text-gray-500 text-xs">
       {supplier.contact}
     </Link>
+    <div className="flex gap-5 items-center justify-center mt-3">
+      <Link
+        to={`/suppliers/${supplier.id}`}
+        className="text-blue-600 text-sm hover:underline"
+      >
+        Voir les détails
+      </Link>
+      <Link to={`/mock-suppliers/${supplier.id}`} className="text-blue-600 text-sm hover:underline">
   </div>
 );
 
