@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Tel } from "react-lucide";
 
 const SupplierDetailsPage = () => {
   const { id } = useParams();
@@ -14,11 +15,16 @@ const SupplierDetailsPage = () => {
   if (!supplier) return <div>Chargement...</div>;
 
   return (
-    <div className="p">
+    <div className="flex flex-col items-center justify-center border-2 p-8 m-10">
       <h2 className="text-xl font-bold mb-2">{supplier.name}</h2>
-      <p>Email : {supplier.contact}</p>
-      <p>Adresse : {supplier.address}</p>
-      <p>Téléphone : {supplier.phone}</p>
+      <img src={supplier.image} alt={supplier.name} />
+      <h3>{supplier.name}</h3>
+      <p>{supplier.address}</p>
+      <p>
+        {" "}
+        <span></span>
+        {supplier.phone}
+      </p>
     </div>
   );
 };
