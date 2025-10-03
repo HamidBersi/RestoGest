@@ -6,6 +6,7 @@ import LoginPage from "./Pages/LoginPage";
 import { Toaster } from "sonner";
 import Home from "./Pages/HomePage";
 import Suppliers from "./Pages/SuppliersPage";
+import SupplierDetailsPage from "./Pages/SupplierDetailsPage";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/home" element={<Home />} />
           <Route path="/suppliers" element={<Suppliers />} />
+          <Route path="/suppliers/:id" element={<SupplierDetailsPage />} />
         </Routes>
       </UserProvider>
     </>
