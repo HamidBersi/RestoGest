@@ -6,7 +6,7 @@ const SupplierDetailsPage = () => {
   const [supplier, setSupplier] = useState<any>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/suppliers/mock/${id}/info`)
+    fetch(`http://localhost:4000/api/mock-suppliers/mock/${id}/info`)
       .then((res) => res.json())
       .then((data) => setSupplier(data));
   }, [id]);
@@ -14,7 +14,7 @@ const SupplierDetailsPage = () => {
   if (!supplier) return <div>Chargement...</div>;
 
   return (
-    <div className="p-8">
+    <div className="flex flex-col items-center justify-center border-2 p-8 m-8 rounded shadow-lg bg-blue-50">
       <h2 className="text-xl font-bold mb-2">{supplier.name}</h2>
       <p>Email : {supplier.contact}</p>
       <p>Adresse : {supplier.address}</p>
