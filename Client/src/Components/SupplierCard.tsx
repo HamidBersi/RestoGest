@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Button } from "./ui/button"; // adapte le chemin si besoin
 
 type Supplier = {
   id: number;
@@ -20,14 +21,24 @@ const SupplierCard = ({ supplier }: { supplier: Supplier }) => (
     <Link to={"mailto:" + supplier.contact} className="text-gray-500 text-xs">
       {supplier.contact}
     </Link>
-    <div className="flex gap-5 items-center justify-center mt-3">
-      <Link
-        to={`/suppliers/${supplier.id}`}
-        className="text-blue-600 text-sm hover:underline"
-      >
-        Voir les détails
+    <div className="flex gap-4 items-center justify-center mt-4">
+      <Link to={`/suppliers/${supplier.id}/products`}>
+        <Button
+          variant="outline"
+          className="bg-blue-600 text-white hover:bg-blue-700"
+        >
+          Produits
+        </Button>
       </Link>
-      <Link to={`/mock-suppliers/${supplier.id}`} className="text-blue-600 text-sm hover:underline">
+      <Link to={`/suppliers/${supplier.id}`}>
+        <Button
+          variant="default"
+          className="bg-blue-600 text-white hover:bg-blue-700"
+        >
+          Infos
+        </Button>
+      </Link>
+    </div>
   </div>
 );
 
