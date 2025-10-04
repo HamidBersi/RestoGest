@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import Home from "./Pages/HomePage";
 import Suppliers from "./Pages/SuppliersPage";
 import SupplierDetailsPage from "./Pages/SupplierDetailsPage";
+import SupplierProductsPage from "./Pages/SupplierProductsPage";
 
 export default function App() {
   return (
@@ -20,6 +21,10 @@ export default function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/suppliers/:id" element={<SupplierDetailsPage />} />
+          <Route
+            path="/suppliers/:id/products"
+            element={<SupplierProductsPage />}
+          />
         </Routes>
       </UserProvider>
     </>
