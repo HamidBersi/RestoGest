@@ -65,7 +65,7 @@ const SupplierDetailsPage = () => {
   if (!supplier) return <div className="m-10">Chargement…</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center border-2 p-8 m-10 rounded-xl shadow-md max-w-xl mx-auto">
+    <div className=" h-screen flex flex-col items-center justify-center border-2 p-8 m-10 rounded-xl shadow-md max-w-xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">{supplier.name}</h2>
 
       {(supplier.image || supplier.sloganImage) && (
