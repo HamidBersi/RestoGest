@@ -106,7 +106,9 @@ const SupplierDetailsPage = () => {
       <div className="flex justify-center gap-4 mt-6">
         <Button
           className="bg-blue-600 hover:bg-blue-700 text-white px-6"
-          onClick={() => console.log("Produits du fournisseur")}
+          onClick={() =>
+            (window.location.href = `/suppliers/${supplier.id}/products`)
+          }
         >
           Produits
         </Button>

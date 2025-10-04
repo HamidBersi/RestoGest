@@ -11,24 +11,48 @@ type Product = {
   image?: string;
 };
 
+function getNumericId(idParam?: string) {
+  if (!idParam) return "";
+  return idParam.match(/\d+/)?.[0] ?? "";
+}
+
 const SupplierProductsPage = () => {
   const { id } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    if (!id) return;
+    setError("");
+    setProducts([]);
+    setLoading(true);
 
-    fetch(`http://localhost:4000/api/mock-suppliers/${id}/products`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data);
-        setLoading(false);
+    const numericId = getNumericId(id); // "SUP2" -> "2"
+    if (!numericId) {
+      setError("Identifiant fournisseur invalide.");
+      setLoading(false);
+      return;
+    }
+
+    const url = `http://localhost:4000/api/mock-suppliers/mock/${numericId}/products`;
+
+    fetch(url)
+      .then(async (res) => {
+        if (!res.ok) {
+          const text = await res.text().catch(() => "");
+          throw new Error(
+            `Erreur ${res.status} sur ${url}${text ? ` : ${text}` : ""}`
+          );
+        }
+        return res.json();
       })
-      .catch(() => setLoading(false));
+      .then((data: Product[]) => setProducts(data))
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
   }, [id]);
 
   if (loading) return <div className="p-6">Chargement des produits...</div>;
+  if (error) return <div className="p-6 text-red-600">{error}</div>;
 
   return (
     <div className="p-8">
