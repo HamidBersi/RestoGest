@@ -17,14 +17,18 @@ type ProductProps = {
 
 const ProductCard = ({ name, description, price, image }: ProductProps) => {
   return (
-    <Card className="w-64 shadow-md hover:shadow-lg transition rounded-xl overflow-hidden">
+    <Card className="w-64 shadow-md hover:shadow-lg transition rounded-xl overflow-hidden p-3">
       {image && (
-        <img src={image} alt={name} className="w-full h-40 object-cover" />
+        <img
+          src={image}
+          alt={name}
+          className="w-full h-40 object-cover rounded-xl mb-4 border"
+        />
       )}
       <CardHeader className="font-bold text-lg">{name}</CardHeader>
       <CardContent>
         <p className="text-sm text-gray-600 line-clamp-2">{description}</p>
-        {price && <p className="mt-2 font-semibold text-blue-600">{price} €</p>}
+        {price && <p className="font-semibold">{price} €</p>}
       </CardContent>
       <CardFooter>
         <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full">
