@@ -9,6 +9,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "FAR-T45",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "A2",
@@ -19,6 +21,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "FAR-T55",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "B1",
@@ -29,6 +33,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "SUC-SEM",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "B2",
@@ -39,6 +45,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "SUC-GLA",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "C1",
@@ -49,6 +57,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "SEL-FIN",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "C2",
@@ -59,6 +69,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "SEL-GUE",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "D1",
@@ -69,6 +81,8 @@ export async function fetchSupplierProducts() {
       unit: "L",
       sku: "HUI-OLI",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "D2",
@@ -79,6 +93,8 @@ export async function fetchSupplierProducts() {
       unit: "L",
       sku: "HUI-TOU",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "E1",
@@ -89,6 +105,8 @@ export async function fetchSupplierProducts() {
       unit: "L",
       sku: "LAI-ENT",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "E2",
@@ -99,6 +117,8 @@ export async function fetchSupplierProducts() {
       unit: "L",
       sku: "LAI-DEM",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "F1",
@@ -109,6 +129,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "BEU-DOU",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "F2",
@@ -119,6 +141,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "BEU-DEM",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "G1",
@@ -129,6 +153,8 @@ export async function fetchSupplierProducts() {
       unit: "pièce",
       sku: "OEU-FRA",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "H1",
@@ -139,6 +165,8 @@ export async function fetchSupplierProducts() {
       unit: "sachet",
       sku: "LEV-BOU",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "I1",
@@ -149,6 +177,8 @@ export async function fetchSupplierProducts() {
       unit: "L",
       sku: "CRE-LIQ",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "J1",
@@ -159,6 +189,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "CHO-NOI",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "J2",
@@ -169,6 +201,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "CHO-LAI",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "K1",
@@ -179,6 +213,8 @@ export async function fetchSupplierProducts() {
       unit: "pièce",
       sku: "YAO-NAT",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "L1",
@@ -189,6 +225,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "PAI-MIE",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "M1",
@@ -199,6 +237,8 @@ export async function fetchSupplierProducts() {
       unit: "kg",
       sku: "JAM-BLA",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
     },
     // ...ajoute autant de produits que tu veux !
   ];
@@ -228,6 +268,8 @@ export async function fetchSupplier2Products() {
       unit: "kg",
       sku: "TOM-CER",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "X2",
@@ -238,6 +280,8 @@ export async function fetchSupplier2Products() {
       unit: "kg",
       sku: "CON-COM",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "Y1",
@@ -248,6 +292,8 @@ export async function fetchSupplier2Products() {
       unit: "kg",
       sku: "POM-GAL",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "Y2",
@@ -258,6 +304,8 @@ export async function fetchSupplier2Products() {
       unit: "kg",
       sku: "BAN-BAN",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "Z1",
@@ -268,6 +316,8 @@ export async function fetchSupplier2Products() {
       unit: "kg",
       sku: "POU-ENT",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
     },
     {
       id: "Z2",
@@ -278,6 +328,8 @@ export async function fetchSupplier2Products() {
       unit: "kg",
       sku: "STE-HAC",
       vat_rate: 5.5,
+      image:
+        "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
     },
   ];
 }
