@@ -27,7 +27,7 @@ const SupplierProductsPage = () => {
     setProducts([]);
     setLoading(true);
 
-    const numericId = getNumericId(id); // "SUP2" -> "2"
+    const numericId = getNumericId(id);
     if (!numericId) {
       setError("Identifiant fournisseur invalide.");
       setLoading(false);
