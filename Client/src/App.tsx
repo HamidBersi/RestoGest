@@ -8,6 +8,7 @@ import Home from "./Pages/HomePage";
 import Suppliers from "./Pages/SuppliersPage";
 import SupplierDetailsPage from "./Pages/SupplierDetailsPage";
 import SupplierProductsPage from "./Pages/SupplierProductsPage";
+import ProductDetailsPage from "./Pages/ProductDetailsPage";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
             path="/suppliers/:id/products"
             element={<SupplierProductsPage />}
           />
+          <Route path="/products/:productId" element={<ProductDetailsPage />} />
         </Routes>
       </UserProvider>
     </>

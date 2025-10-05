@@ -7,15 +7,17 @@ import {
 } from "../Components/ui/card";
 
 import { Button } from "../Components/ui/button";
+import { Link } from "react-router-dom";
 
 type ProductProps = {
+  id: string;
   name: string;
   description?: string;
   price?: number;
   image?: string;
 };
 
-const ProductCard = ({ name, description, price, image }: ProductProps) => {
+const ProductCard = ({ id, name, description, price, image }: ProductProps) => {
   return (
     <Card className="w-64 shadow-md hover:shadow-lg transition rounded-xl overflow-hidden p-1">
       {image && (
@@ -32,7 +34,7 @@ const ProductCard = ({ name, description, price, image }: ProductProps) => {
       </CardContent>
       <CardFooter className="mt-1 pt-0">
         <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full py-1 text-xs">
-          Voir
+          <Link to={`/products/${id}`}>Voir</Link>
         </Button>
       </CardFooter>
     </Card>
