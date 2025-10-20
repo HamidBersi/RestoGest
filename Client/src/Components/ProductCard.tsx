@@ -5,9 +5,8 @@ import {
   CardContent,
   CardFooter,
 } from "../Components/ui/card";
-
 import { Button } from "../Components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 type ProductProps = {
   id: string;
@@ -18,6 +17,8 @@ type ProductProps = {
 };
 
 const ProductCard = ({ id, name, description, price, image }: ProductProps) => {
+  const { id: supplierId } = useParams();
+
   return (
     <Card className="w-64 shadow-md hover:shadow-lg transition rounded-xl overflow-hidden p-1">
       {image && (
@@ -33,9 +34,15 @@ const ProductCard = ({ id, name, description, price, image }: ProductProps) => {
         {price && <p className="font-semibold text-xs mt-1">{price} €</p>}
       </CardContent>
       <CardFooter className="mt-1 pt-0">
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full py-1 text-xs">
-          <Link to={`/products/${id}`}>Voir</Link>
-        </Button>
+        <Link
+          to={`/
+          +suppliers/${supplierId}/products/${id}`}
+          className="w-full"
+        >
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full py-1 text-xs">
+            Voir
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );
