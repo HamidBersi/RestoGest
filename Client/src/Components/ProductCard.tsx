@@ -1,4 +1,5 @@
 // src/components/ProductCard.tsx
+import { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -14,7 +15,7 @@ type ProductProps = {
   description?: string;
   price?: number;
   image?: string;
-  onAdd?: (productId: string) => void;
+  onAdd?: (productId: string, qty?: number) => void;
 };
 
 const ProductCard = ({
@@ -25,6 +26,7 @@ const ProductCard = ({
   image,
   onAdd,
 }: ProductProps) => {
+  const [qty, setQty] = useState<number>(1);
   const params = useParams<{ supplierId?: string; id?: string }>();
   const supplierId = params.supplierId ?? params.id;
   const target = supplierId
@@ -49,19 +51,30 @@ const ProductCard = ({
       </CardContent>
 
       <CardFooter className="mt-1 pt-0">
-        <div className="w-full flex gap-2">
+        <div className="w-full flex gap-2 items-center">
           <Link to={target} className="flex-1">
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-1 text-xs">
+            <Button className="w-full h-full bg-blue-600 hover:bg-blue-700 text-white py-1 text-xs">
               Voir
             </Button>
           </Link>
 
-          <Button
-            onClick={() => onAdd?.(id)}
-            className="flex-blue bg-blue-600 hover:bg-blue-700 text-white py-1 text-xs"
-          >
-            Ajouter au panier
-          </Button>
+          <div className="flex items-center gap-2 w-1/2">
+            <input
+              type="number"
+              min={1}
+              value={qty}
+              onChange={(e) => setQty(Math.max(1, Number(e.target.value || 1)))}
+              className="w-16 p-1 border rounded text-sm"
+            />
+            <div className="flex-1">
+              <Button
+                onClick={() => onAdd?.(id, qty)}
+                className="w-full h-full bg-green-600 hover:bg-green-700 text-white py-1 text-xs"
+              >
+                Ajouter
+              </Button>
+            </div>
+          </div>
         </div>
       </CardFooter>
     </Card>

@@ -1,4 +1,5 @@
 import {
+  ClipboardList,
   ShoppingCart,
   Truck,
   Settings,
@@ -44,7 +45,7 @@ const SideBar = () => {
               to="/orders"
               className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg px-3 py-2"
             >
-              <ShoppingCart size={15} />
+              <ClipboardList size={15} />
               <span>Commandes</span>
             </Link>
           </li>
@@ -64,6 +65,15 @@ const SideBar = () => {
             >
               <Settings size={15} />
               <span>Paramètres</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/cart"
+              className="flex items-center gap-3 text-gray-700 text-sm hover:text-blue-600 cursor-pointer hover:bg-blue-100 rounded-lg px-3 py-2"
+            >
+              <ShoppingCart size={15} />
+              <span>Mon panier</span>
             </Link>
           </li>
           <li>
