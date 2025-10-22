@@ -1,23 +1,22 @@
 import { Router } from "express";
 import {
-  addToCart,
+  addItemToCart
   clearCart,
   getCart,
-  removeFromCart,
-  updateCartItem,
+  removeItemFromCart,
 } from "../controllers/cartController.js";
 import { sanitizeBody } from "../middleware/xss.js";
 
 const router = Router();
 
-router.post("/add", sanitizeBody(["productId", "quantity"]), addToCart);
+router.post("/add", sanitizeBody(["productId", "quantity"]), addItemToCart);
 router.get("/", getCart);
 router.patch(
   "/update",
   sanitizeBody(["productId", "quantity"]),
-  updateCartItem
+  clearCart
 );
-router.delete("/remove/:productId", removeFromCart);
+router.delete("/remove/:productId", removeItemFromCart);
 router.delete("/clear", clearCart);
 
 export default router;
