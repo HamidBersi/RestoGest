@@ -60,7 +60,12 @@ const SupplierProductsPage = () => {
       {products.length === 0 ? (
         <p>Aucun produit trouvé pour ce fournisseur.</p>
       ) : (
-        <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))" }}>
+        <div
+          className="grid gap-6"
+          style={{
+            gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+          }}
+        >
           {products.map((p) => (
             <ProductCard
               key={p.id}

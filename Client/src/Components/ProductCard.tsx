@@ -43,7 +43,9 @@ const ProductCard = ({
             className="w-full h-28 object-cover rounded-lg mb-1 border"
           />
         )}
-        <CardHeader className="font-bold text-sm mb-0 flex-shrink-0">{name}</CardHeader>
+        <CardHeader className="font-bold text-sm mb-0 flex-shrink-0">
+          {name}
+        </CardHeader>
         <CardContent className="mb-0 pb-0 flex-grow">
           <p className="text-xs text-gray-600 line-clamp-2 mb-0">
             {description}

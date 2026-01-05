@@ -18,7 +18,10 @@ const SuppliersPage = () => {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-10 text-center">Fournisseurs</h1>
-      <div className="grid px-20 gap-3" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}>
+      <div
+        className="grid px-20 gap-3"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}
+      >
         {suppliers.map((supplier) => (
           <SupplierCard key={supplier.id} supplier={supplier} />
         ))}
