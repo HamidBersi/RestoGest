@@ -1,13 +1,13 @@
 /**
  * realSupplierApi.ts
- * 
+ *
  * Ce fichier contient les fonctions pour récupérer les données
  * depuis de vraies APIs externes (Fake Store API, etc.)
  */
 
 /**
  * FOURNISSEUR 1 : Fake Store API
- * 
+ *
  * API gratuite avec des produits réalistes, images, et prix
  * URL: https://fakestoreapi.com
  */
@@ -35,7 +35,9 @@ export async function fetchSupplier1Products() {
 
     // ÉTAPE 2 : Vérifier que la réponse est OK
     if (!response.ok) {
-      throw new Error(`❌ Erreur API: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `❌ Erreur API: ${response.status} ${response.statusText}`
+      );
     }
 
     // ÉTAPE 3 : Convertir en JSON
@@ -71,7 +73,7 @@ export async function fetchSupplier1Products() {
 
 /**
  * FOURNISSEUR 2 : Open Food Facts API
- * 
+ *
  * API GRATUITE avec des VRAIS produits alimentaires français !
  * - Vraies marques (Francine, Président, Lactel, etc.)
  * - Vraies images des emballages
@@ -127,7 +129,8 @@ export async function fetchSupplier2Products() {
               p.product_name_fr ||
               p.generic_name ||
               "Produit alimentaire",
-            category: p.categories_tags?.[0]?.replace("en:", "") || "Alimentaire",
+            category:
+              p.categories_tags?.[0]?.replace("en:", "") || "Alimentaire",
             price: parseFloat((Math.random() * 15 + 2).toFixed(2)), // Prix simulé réaliste
             stock: Math.floor(Math.random() * 200) + 30,
             unit: "unité",
