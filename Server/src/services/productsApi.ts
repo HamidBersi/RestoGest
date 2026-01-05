@@ -5,7 +5,7 @@ export type Product = {
   price: number;
   category?: string;
   thumbnail?: string;
-  images?: string[]; // galerie
+  images?: string[];
 };
 
 type ProductsResponse = {
@@ -14,9 +14,10 @@ type ProductsResponse = {
   skip: number;
   limit: number;
 };
-
 const BASE_URL =
-  (import.meta as any).env?.VITE_API_BASE_URL ?? "https://dummyjson.com";
+  process.env.PRODUCTS_API_BASE_URL ??
+  process.env.VITE_API_BASE_URL ??
+  "https://dummyjson.com";
 
 export async function fetchProducts(params?: {
   q?: string;
@@ -41,4 +42,21 @@ export async function fetchProducts(params?: {
   }));
 
   return { items: list, total: data.total };
+}
+
+// added: safe wrapper for callers that want a fallback instead of throwing
+export async function getProductsSafe(params?: {
+  q?: string;
+  limit?: number;
+  skip?: number;
+}) {
+  try {
+    return await fetchProducts(params);
+  } catch (err) {
+    console.warn(
+      "productsApi.fetchProducts failed, returning empty list:",
+      err
+    );
+    return { items: [] as Product[], total: 0 };
+  }
 }

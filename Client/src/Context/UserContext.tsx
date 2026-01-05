@@ -13,7 +13,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     fetch("http://localhost:4000/api/auth/me", { credentials: "include" })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
-        console.log("UserContext /me data:", data);
         if (data?.user) setUser(data.user);
       });
   }, []);

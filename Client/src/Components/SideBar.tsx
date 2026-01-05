@@ -11,9 +11,6 @@ import { useUser } from "../Context/UserContext";
 import { Link } from "react-router-dom";
 const SideBar = () => {
   const { user } = useUser();
-
-  console.log("Sidebar user:", user);
-
   if (!user) return null;
   return (
     <aside className="flex flex-col h-screen w-50 border-r bg-blue-50">

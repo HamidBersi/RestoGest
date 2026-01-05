@@ -1,19 +1,27 @@
 import { Request, Response } from "express";
-import * as mockApi from "../services/mockSupplierApi.js";
+import { getProductsSafe } from "../services/productsApi.js";
+import {
+  fetchSupplier1Info,
+  fetchSupplier1Products,
+  fetchSupplier2Info,
+  fetchSupplier2Products,
+} from "../services/realSupplierApi.js";
+
+const { items } = await getProductsSafe({ limit: 20, skip: 0 }); // et items[i].image pour l'affichage
 
 type SupplierApi = {
   info: () => Promise<any>;
   products: () => Promise<any[]>;
 };
 
-const suppliersData = {
+const suppliersData: Record<string, SupplierApi> = {
   "1": {
-    info: mockApi.fetchSupplierInfo,
-    products: mockApi.fetchSupplierProducts,
+    info: fetchSupplier1Info,
+    products: fetchSupplier1Products,
   },
   "2": {
-    info: mockApi.fetchSupplier2Info,
-    products: mockApi.fetchSupplier2Products,
+    info: fetchSupplier2Info,
+    products: fetchSupplier2Products,
   },
 };
 export async function getAllMockSuppliers(req: Request, res: Response) {

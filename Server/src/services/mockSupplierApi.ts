@@ -246,7 +246,7 @@ export async function fetchSupplierProducts() {
 
 export async function fetchSupplierInfo() {
   return {
-    id: "SUP1",
+    id: 1,
     name: "Fournisseur Pro Alimentaire",
     contact: "contact@fournisseurpro.com",
     address: "12 rue des Marchés, 75000 Paris",
@@ -335,7 +335,7 @@ export async function fetchSupplier2Products() {
 }
 export async function fetchSupplier2Info() {
   return {
-    id: "SUP2",
+    id: 2,
     name: "Fournisseur Fraîcheur",
     contact: "contact@fournisseurfraicheur.com",
     address: "45 avenue des Fleurs, 75000 Paris",
