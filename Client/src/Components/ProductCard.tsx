@@ -7,7 +7,7 @@ import {
   CardFooter,
 } from "../Components/ui/card";
 import { Button } from "../Components/ui/button";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 type ProductProps = {
   id: string;

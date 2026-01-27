@@ -1,5 +1,6 @@
 // src/context/UserContext.tsx
 import { createContext, useContext, useState, useEffect } from "react";
+import { apiCall } from "@/lib/api";
 
 type User = { name: string; email: string; role: string; avatar?: string };
 type UserContextType = { user: User | null; setUser: (u: User | null) => void };
@@ -10,10 +11,12 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/auth/me", { credentials: "include" })
-      .then((res) => (res.ok ? res.json() : null))
+    apiCall<{ user: User }>("/auth/me")
       .then((data) => {
         if (data?.user) setUser(data.user);
+      })
+      .catch(() => {
+        // Utilisateur non authentifié
       });
   }, []);
 

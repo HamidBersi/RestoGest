@@ -37,14 +37,14 @@ const SupplierDetailsPage = () => {
       return;
     }
 
-    const url = `http://localhost:4000/api/mock-suppliers/mock/${numericId}/info`;
+    const url = `http://127.0.0.1:4000/api/mock-suppliers/mock/${numericId}/info`;
 
     fetch(url)
       .then(async (res) => {
         if (!res.ok) {
           const text = await res.text().catch(() => "");
           throw new Error(
-            `Erreur ${res.status} sur ${url} ${text ? `: ${text}` : ""}`
+            `Erreur ${res.status} sur ${url} ${text ? `: ${text}` : ""}`,
           );
         }
         return res.json();

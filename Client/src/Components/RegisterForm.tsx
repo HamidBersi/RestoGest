@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/Components/ui/button";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { apiCall } from "@/lib/api";
 
 const RegisterForm = () => {
   const [form, setForm] = useState({
@@ -14,11 +15,11 @@ const RegisterForm = () => {
   const navigate = useNavigate();
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value, files } = e.target as any;
     setForm((f) =>
-      files ? { ...f, avatar: files[0] } : { ...f, [name]: value }
+      files ? { ...f, avatar: files[0] } : { ...f, [name]: value },
     );
   };
 
@@ -31,16 +32,17 @@ const RegisterForm = () => {
     data.append("password", form.password);
     if (form.avatar) data.append("avatar", form.avatar);
 
-    const res = await fetch("http://localhost:4000/api/auth/register", {
-      method: "POST",
-      body: data,
-    });
-    const result = await res.json();
-    if (res.ok) {
-      toast.success("Registration successful!");
+    try {
+      await apiCall("/auth/register", {
+        method: "POST",
+        body: data,
+      });
+      toast.success("Inscription réussie !");
       navigate("/login");
-    } else {
-      toast.error(result.error || "Registration failed");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Inscription échouée";
+      toast.error(message);
     }
   };
 

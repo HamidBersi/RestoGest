@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/Components/ui/button";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import type e from "express";
+import { apiCall } from "@/lib/api";
 
 const LoginForm = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -14,21 +14,20 @@ const LoginForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:4000/api/auth/login", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: form.email,
-        password: form.password,
-      }),
-    });
-    const result = await res.json();
-    if (res.ok) {
+    try {
+      await apiCall("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password,
+        }),
+      });
       toast.success("Connexion réussie !");
       navigate("/home");
-    } else {
-      toast.error(result.error || "Échec de la connexion");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Échec de la connexion";
+      toast.error(message);
     }
   };
 

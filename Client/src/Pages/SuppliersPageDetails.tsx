@@ -6,7 +6,7 @@ const SupplierDetailsPage = () => {
   const [supplier, setSupplier] = useState<any>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/mock-suppliers/mock/${id}/info`)
+    fetch(`http://127.0.0.1:4000/api/mock-suppliers/mock/${id}/info`)
       .then((res) => res.json())
       .then((data) => setSupplier(data));
   }, [id]);

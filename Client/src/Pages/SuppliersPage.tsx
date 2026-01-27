@@ -7,7 +7,7 @@ const SuppliersPage = () => {
   >([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/mock-suppliers/mock", {
+    fetch("http://127.0.0.1:4000/api/mock-suppliers/mock", {
       credentials: "include",
     })
       .then((res) => res.json())

@@ -1,6 +1,7 @@
 // src/pages/SupplierProductsPage.tsx
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { apiCall } from "@/lib/api";
 import ProductCard from "../Components/ProductCard";
 
 type Product = {
@@ -34,21 +35,19 @@ const SupplierProductsPage = () => {
       return;
     }
 
-    const url = `http://localhost:4000/api/mock-suppliers/mock/${numericId}/products`;
+    const controller = new AbortController();
 
-    fetch(url)
-      .then(async (res) => {
-        if (!res.ok) {
-          const text = await res.text().catch(() => "");
-          throw new Error(
-            `Erreur ${res.status} sur ${url}${text ? ` : ${text}` : ""}`
-          );
-        }
-        return res.json();
+    apiCall<Product[]>(`/mock-suppliers/mock/${numericId}/products`, {
+      signal: controller.signal,
+    })
+      .then((data) => setProducts(data))
+      .catch((e) => {
+        if (e.name === "AbortError") return; // requête annulée lors d'un changement de page
+        setError(e.message || "Erreur de chargement des produits");
       })
-      .then((data: Product[]) => setProducts(data))
-      .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
+
+    return () => controller.abort();
   }, [id]);
 
   if (loading) return <div className="p-6">Chargement des produits...</div>;

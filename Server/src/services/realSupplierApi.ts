@@ -28,29 +28,21 @@ export async function fetchSupplier1Info() {
 
 export async function fetchSupplier1Products() {
   try {
-    console.log("📦 Récupération des produits depuis Fake Store API...");
-
-    // ÉTAPE 1 : Faire l'appel à l'API
     const response = await fetch("https://fakestoreapi.com/products?limit=10");
-
-    // ÉTAPE 2 : Vérifier que la réponse est OK
     if (!response.ok) {
       throw new Error(
-        `❌ Erreur API: ${response.status} ${response.statusText}`
+        `Erreur API: ${response.status} ${response.statusText}`
       );
     }
 
     // ÉTAPE 3 : Convertir en JSON
     const products = await response.json();
-    console.log(`✅ ${products.length} produits récupérés`);
-
-    // ÉTAPE 4 : Transformer les données pour correspondre à ton format
     const transformedProducts = products.map((product: any) => ({
-      id: String(product.id), // Convertir en string pour matcher ton format
+      id: String(product.id),
       name: product.title,
       category: product.category,
       price: product.price,
-      stock: Math.floor(Math.random() * 200) + 50, // Stock aléatoire (50-250)
+      stock: Math.floor(Math.random() * 200) + 50,
       unit: "pièce",
       image: product.image,
       description: product.description,
@@ -96,59 +88,60 @@ export async function fetchSupplier2Info() {
 
 export async function fetchSupplier2Products() {
   try {
-    console.log("🥗 Récupération des produits depuis Open Food Facts API...");
+    // On limite le temps d'attente par requête pour éviter les timeouts très longs
+    const TIMEOUT_MS = 4000;
 
-    // Chercher plusieurs catégories de produits alimentaires français
+    // Chercher plusieurs catégories de produits alimentaires français (mais en parallèle)
     const searchTerms = [
       "farine francine",
       "sucre daddy",
       "lait lactel",
-      "beurre président",
+      "beurre president",
       "huile lesieur",
     ];
 
-    const allProducts = [];
-
-    for (const term of searchTerms) {
+    const fetchWithTimeout = async (term: string) => {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
       try {
         const response = await fetch(
           `https://world.openfoodfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(
             term
-          )}&page_size=2&json=1&countries=France`
+          )}&page_size=2&json=1&countries=France`,
+          { signal: controller.signal }
         );
-
-        if (!response.ok) continue;
-
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
-
-        if (data.products && data.products.length > 0) {
-          const products = data.products.slice(0, 2).map((p: any) => ({
-            id: p.code || `OFF-${Math.random().toString(36).substr(2, 9)}`,
-            name:
-              p.product_name ||
-              p.product_name_fr ||
-              p.generic_name ||
-              "Produit alimentaire",
-            category:
-              p.categories_tags?.[0]?.replace("en:", "") || "Alimentaire",
-            price: parseFloat((Math.random() * 15 + 2).toFixed(2)), // Prix simulé réaliste
-            stock: Math.floor(Math.random() * 200) + 30,
-            unit: "unité",
-            image:
-              p.image_front_url ||
-              p.image_url ||
-              "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80",
-            sku: p.code || `SKU-${Math.random().toString(36).substr(2, 6)}`,
-            brand: p.brands || "Sans marque",
-            description: p.generic_name || "",
-          }));
-
-          allProducts.push(...products);
-        }
-      } catch (error) {
-        console.warn(`⚠️ Erreur pour le terme "${term}":`, error);
-        continue;
+        return data.products ?? [];
+      } finally {
+        clearTimeout(timer);
       }
+    };
+
+    const settled = await Promise.allSettled(
+      searchTerms.map((term) => fetchWithTimeout(term))
+    );
+
+    const allProducts: any[] = [];
+    for (const result of settled) {
+      if (result.status !== "fulfilled") continue;
+      const products = result.value.slice(0, 2).map((p: any) => ({
+        id: p.code || `OFF-${Math.random().toString(36).substr(2, 9)}`,
+        name:
+          p.product_name || p.product_name_fr || p.generic_name || "Produit alimentaire",
+        category: p.categories_tags?.[0]?.replace("en:", "") || "Alimentaire",
+        price: parseFloat((Math.random() * 15 + 2).toFixed(2)),
+        stock: Math.floor(Math.random() * 200) + 30,
+        unit: "unité",
+        image:
+          p.image_front_url ||
+          p.image_url ||
+          "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80",
+        sku: p.code || `SKU-${Math.random().toString(36).substr(2, 6)}`,
+        brand: p.brands || "Sans marque",
+        description: p.generic_name || "",
+      }));
+      allProducts.push(...products);
     }
 
     console.log(`✅ ${allProducts.length} produits réels récupérés`);
@@ -184,7 +177,7 @@ export async function fetchSupplier2Products() {
       ];
     }
 
-    return allProducts;
+    return allProducts.slice(0, 12); // Limite à 12 produits pour rester rapide
   } catch (error) {
     console.error("❌ Erreur Open Food Facts:", error);
 

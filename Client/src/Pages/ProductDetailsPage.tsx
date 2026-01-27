@@ -1,4 +1,5 @@
 import { Button } from "@/Components/ui/button";
+import { useUser } from "@/Context/UserContext";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -17,6 +18,7 @@ type Product = {
 
 const ProductDetailsPage = () => {
   const { productId } = useParams();
+  const { user } = useUser();
   const [product, setProduct] = useState<Product | null>(null);
   const [error, setError] = useState("");
 
@@ -29,14 +31,16 @@ const ProductDetailsPage = () => {
       return;
     }
 
-    fetch(`http://localhost:4000/api/mock-suppliers/product/${productId}`)
+    fetch(`http://127.0.0.1:4000/api/mock-suppliers/product/${productId}`, {
+      credentials: "include",
+    })
       .then(async (res) => {
         if (!res.ok) throw new Error("Produit introuvable");
         return res.json();
       })
       .then(setProduct)
       .catch((e) => setError(e.message));
-  }, [productId]);
+  }, [productId, user]);
 
   if (error) return <div className="p-6 text-red-600">{error}</div>;
   if (!product) return <div className="p-6">Chargement…</div>;

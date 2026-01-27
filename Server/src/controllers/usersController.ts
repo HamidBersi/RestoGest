@@ -15,7 +15,7 @@ const ARGON_OPTS = {
 export async function createUser(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const { email, password, name, role, avatar } = req.body || {};
@@ -27,7 +27,7 @@ export async function createUser(
 
     const user = await User.create(
       { email, password_hash, name, role, avatar },
-      { fields: ["email", "password_hash", "name", "role", "avatar"] }
+      { fields: ["email", "password_hash", "name", "role", "avatar"] },
     );
 
     return res.status(201).json({
@@ -97,9 +97,10 @@ export async function loginUser(req: Request, res: Response) {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production" ? true : false,
+      secure: false, // Toujours false en dev (http, pas https)
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000, // 1 jour
+      path: "/",
     });
     return res.json({
       user: {
@@ -118,7 +119,7 @@ export async function loginUser(req: Request, res: Response) {
 export async function listUsers(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const page = Math.max(1, Number(req.query.page ?? 1));
@@ -149,7 +150,7 @@ export async function listUsers(
 export async function getOneUser(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const id = parseInt(req.params.id, 10);
@@ -174,7 +175,7 @@ export async function getOneUser(
 export async function updateUser(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const id = Number(req.params.id);
@@ -218,7 +219,7 @@ export async function updateUser(
 export async function deleteUser(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const id = Number(req.params.id);
@@ -239,7 +240,12 @@ export async function deleteUser(
 export async function me(req: Request, res: Response) {
   try {
     const token = req.cookies.token;
-    if (!token) return res.status(401).json({ error: "Unauthorized" });
+
+    if (!token) {
+      return res
+        .status(401)
+        .json({ error: "Unauthorized - No token in cookies" });
+    }
 
     const secret = process.env.JWT_SECRET;
     if (!secret) {
@@ -251,7 +257,9 @@ export async function me(req: Request, res: Response) {
       userId = (decoded as { id: number }).id;
     }
     if (!userId) {
-      return res.status(401).json({ error: "Unauthorized" });
+      return res
+        .status(401)
+        .json({ error: "Unauthorized - Invalid token payload" });
     }
     const user = await User.findByPk(userId, {
       attributes: ["id", "name", "email", "role", "avatar"],
@@ -260,6 +268,7 @@ export async function me(req: Request, res: Response) {
 
     res.json({ user });
   } catch (err) {
+    console.error("❌ /me endpoint error:", err);
     res.status(401).json({ error: "Unauthorized" });
   }
 }
