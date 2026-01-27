@@ -27,11 +27,7 @@ const ProductCard = ({
   onAdd,
 }: ProductProps) => {
   const [qty, setQty] = useState<number>(1);
-  const params = useParams<{ supplierId?: string; id?: string }>();
-  const supplierId = params.supplierId ?? params.id;
-  const target = supplierId
-    ? `/suppliers/${supplierId}/products/${id}`
-    : `/products/${id}`;
+  const target = `/products/${id}`;
 
   return (
     <Link to={target} className="block h-full">
@@ -51,13 +47,15 @@ const ProductCard = ({
             {description}
           </p>
           {price !== undefined && (
-            <p className="font-semibold text-xs mt-1">{price} €</p>
+            <p className="font-semibold text-md mt-6 px-2 rounded-xl bg-blue-500 text-white text-center w-35 ">
+              {price} €
+            </p>
           )}
         </CardContent>
 
-        <CardFooter className="mt-1 pt-0 flex-shrink-0">
-          <div className="w-full flex gap-2 items-center">
-            <div className="flex items-center gap-2 w-1/2">
+        <CardFooter className="mt-4 pt-0 flex-shrink-0 justify-center">
+          <div className="flex gap-2 items-center justify-center">
+            <div className="flex items-center gap-2">
               <input
                 type="number"
                 min={1}
@@ -68,7 +66,7 @@ const ProductCard = ({
                 }}
                 className="w-16 p-1 border rounded text-sm"
               />
-              <div className="flex-1">
+              <div className="w-24">
                 <Button
                   onClick={(e) => {
                     e.preventDefault();

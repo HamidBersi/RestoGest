@@ -57,3 +57,18 @@ export async function getSupplierXOneProduct(req: Request, res: Response) {
   if (product) res.json(product);
   else res.status(404).json({ message: "Product not found" });
 }
+
+// Recherche un produit par ID sans avoir besoin de l'ID du fournisseur
+export async function getProductById(req: Request, res: Response) {
+  const { productId } = req.params;
+
+  for (const [supplierId, supplier] of Object.entries(suppliersData)) {
+    const products = await supplier.products();
+    const product = products.find((p: any) => String(p.id) === productId);
+    if (product) {
+      return res.json({ ...product, supplierId });
+    }
+  }
+
+  return res.status(404).json({ message: "Product not found" });
+}

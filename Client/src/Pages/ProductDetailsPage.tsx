@@ -1,3 +1,4 @@
+import { Button } from "@/Components/ui/button";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -41,7 +42,7 @@ const ProductDetailsPage = () => {
   if (!product) return <div className="p-6">Chargement…</div>;
 
   return (
-    <div className="max-w-md mx-auto p-6 border rounded-xl shadow">
+    <div className="max-w-md mx-auto p-6 border rounded-xl shadow mt-10 bg-white">
       {product.image && (
         <img
           src={product.image}
@@ -67,6 +68,9 @@ const ProductDetailsPage = () => {
       <p>
         <span className="font-semibold">TVA :</span> {product.vat_rate} %
       </p>
+      <Button className="mt-4 w-full bg-blue-500 text-white hover:bg-blue-600">
+        Ajouter au panier
+      </Button>
     </div>
   );
 };
