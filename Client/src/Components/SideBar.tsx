@@ -14,8 +14,8 @@ const SideBar = () => {
   if (!user) return null;
   return (
     <aside className="flex flex-col h-screen w-50 border-r bg-blue-50">
-      <div className="flex flex-col items-center py-8 border-b">
-        <div className="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-white text-3xl mb-2">
+      <div className="flex flex-col items-center py-3 px-2 border-b gap-1">
+        <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white text-xl">
           {user.avatar ? (
             <img
               src={user.avatar}
@@ -23,16 +23,15 @@ const SideBar = () => {
               className="w-full h-full rounded-full"
             />
           ) : (
-            <User size={32} />
+            <User size={20} />
           )}
         </div>
-        <div className="font-semibold text-lg">{user.name}</div>
-        <div className="flex items-center gap-2 mt-1">
-          <span className="bg-gray-100 text-gray-700 text-xs px-2 py-0.5 rounded">
+        <div className="flex items-center gap-2">
+          <span className="font-medium text-sm">{user.name}</span>
+          <span className="bg-gray-100 text-gray-700 text-xs px-1.5 py-0.5 rounded">
             {user.role}
           </span>
         </div>
-        <div className="text-gray-500 text-sm mt-1">{user.email}</div>
       </div>
 
       <nav className="flex-1 px-6 py-4">

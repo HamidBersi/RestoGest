@@ -108,8 +108,8 @@ export async function getAllOrders(req: Request, res: Response) {
     const orders = await Order.findAll({
       include: [
         {
-          model: Product,
-          through: { attributes: ["unit_price", "quantity"] },
+          model: OrderItem,
+          include: [{ model: Product }],
         },
         {
           model: Supplier,
@@ -131,8 +131,8 @@ export async function getOrderById(req: Request, res: Response) {
     const order = await Order.findByPk(id, {
       include: [
         {
-          model: Product,
-          through: { attributes: ["unit_price", "quantity"] },
+          model: OrderItem,
+          include: [{ model: Product }],
         },
         {
           model: Supplier,

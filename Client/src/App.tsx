@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { UserProvider } from "./Context/UserContext";
 import { CartProvider } from "./Context/CartContext";
 import Register from "./Pages/RegisterPage";
@@ -13,14 +13,18 @@ import ProductDetailsPage from "./Pages/ProductDetailsPage";
 import CartPage from "./Pages/CartPage"; // 🆕
 import Navbar from "./Components/Navbar"; // 🆕
 import OrdersPage from "./Pages/OrdersPage"; // 🆕
+import OrderDetailsPage from "./Pages/OrderDetailsPage"; // 🆕
 
 export default function App() {
+  const location = useLocation();
+  const hideNavbar = location.pathname === "/home";
+
   return (
     <>
       <Toaster richColors position="top-center" />
       <UserProvider>
         <CartProvider>
-          <Navbar /> {/* 🆕 Navbar sticky */}
+          {!hideNavbar && <Navbar />} {/* 🆕 Navbar sticky - sauf sur /home */}
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/register" element={<Register />} />
@@ -38,6 +42,8 @@ export default function App() {
             />
             <Route path="/cart" element={<CartPage />} /> {/* 🆕 */}
             <Route path="/orders" element={<OrdersPage />} /> {/* 🆕 */}
+            <Route path="/orders/:id" element={<OrderDetailsPage />} />{" "}
+            {/* 🆕 */}
           </Routes>
         </CartProvider>
       </UserProvider>

@@ -3,6 +3,7 @@ import { Button } from "@/Components/ui/button";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { apiCall } from "@/lib/api";
+import { Eye, EyeOff } from "lucide-react";
 
 const RegisterForm = () => {
   const [form, setForm] = useState({
@@ -12,6 +13,7 @@ const RegisterForm = () => {
     password: "",
     avatar: null as File | null,
   });
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (
@@ -80,15 +82,24 @@ const RegisterForm = () => {
         <option value="admin">Admin</option>
         <option value="staff">Membre</option>
       </select>
-      <input
-        name="password"
-        type="password"
-        placeholder="Mot de passe"
-        value={form.password}
-        onChange={handleChange}
-        className="py-2 pl-3 rounded-2xl bg-white text-sm"
-        required
-      />
+      <div className="relative">
+        <input
+          name="password"
+          type={showPassword ? "text" : "password"}
+          placeholder="Mot de passe"
+          value={form.password}
+          onChange={handleChange}
+          className="py-2 pl-3 pr-10 rounded-2xl bg-white text-sm w-full"
+          required
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
+        >
+          {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+        </button>
+      </div>
       <input
         name="avatar"
         type="file"

@@ -3,9 +3,11 @@ import { Button } from "@/Components/ui/button";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { apiCall } from "@/lib/api";
+import { Eye, EyeOff } from "lucide-react";
 
 const LoginForm = () => {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,15 +47,24 @@ const LoginForm = () => {
         className="py-2 pl-3 w-[95%] rounded-2xl bg-white text-xs"
         required
       />
-      <input
-        name="password"
-        type="password"
-        placeholder="Mot de passe"
-        value={form.password}
-        onChange={handleChange}
-        className="py-2 pl-3 w-[95%] rounded-2xl bg-white text-xs"
-        required
-      />
+      <div className="relative w-[95%]">
+        <input
+          name="password"
+          type={showPassword ? "text" : "password"}
+          placeholder="Mot de passe"
+          value={form.password}
+          onChange={handleChange}
+          className="py-2 pl-3 pr-10 w-full rounded-2xl bg-white text-xs"
+          required
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
+        >
+          {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+        </button>
+      </div>
       <Button
         type="submit"
         variant="default"
