@@ -73,6 +73,7 @@ const SupplierProductsPage = () => {
               price={p.price}
               image={p.image}
               id={p.id}
+              supplierId={id || ""} // 🆕 Passer le supplierId
             />
           ))}
         </div>

@@ -1,6 +1,7 @@
 import SloganIcon from "@/Components/Icons/SloganIcon";
 import { Button } from "@/Components/ui/button";
 import { Link } from "react-router-dom";
+import CartIcon from "@/Components/CartIcon"; // 🆕
 
 const Header = () => {
   return (
@@ -15,7 +16,10 @@ const Header = () => {
             </p>
           </div>
         </div>
-        <div className="flex gap-4 mr-5">
+        <div className="flex gap-4 mr-5 items-center">
+          {/* 🆕 Icône panier */}
+          <CartIcon />
+
           <Button asChild variant="default">
             <Link
               to="/login"

@@ -2,7 +2,13 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { apiCall } from "@/lib/api";
 
-type User = { name: string; email: string; role: string; avatar?: string };
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  avatar?: string;
+};
 type UserContextType = { user: User | null; setUser: (u: User | null) => void };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);

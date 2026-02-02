@@ -8,6 +8,8 @@ import {
 } from "../Components/ui/card";
 import { Button } from "../Components/ui/button";
 import { Link } from "react-router-dom";
+import { useCart } from "../Context/CartContext";
+import { toast } from "sonner";
 
 type ProductProps = {
   id: string;
@@ -15,6 +17,7 @@ type ProductProps = {
   description?: string;
   price?: number;
   image?: string;
+  supplierId: string; // 🆕 Le fournisseur
   onAdd?: (productId: string, qty?: number) => void;
 };
 
@@ -24,10 +27,16 @@ const ProductCard = ({
   description,
   price,
   image,
+  supplierId,
   onAdd,
 }: ProductProps) => {
   const [qty, setQty] = useState<number>(1);
+  const { addToCart, cart } = useCart(); // 🆕 Récupère aussi le cart
   const target = `/products/${id}`;
+
+  // ✅ Vérifier si le produit est déjà dans le panier
+  const existingItem = cart.items.find((item) => item.productId === id);
+  const isInCart = !!existingItem;
 
   return (
     <Link to={target} className="block h-full">
@@ -54,8 +63,8 @@ const ProductCard = ({
         </CardContent>
 
         <CardFooter className="mt-4 pt-0 flex-shrink-0 justify-center">
-          <div className="flex gap-2 items-center justify-center">
-            <div className="flex items-center gap-2">
+          <div className="flex gap-2 items-center justify-center w-full">
+            <div className="flex items-center gap-2 flex-1">
               <input
                 type="number"
                 min={1}
@@ -66,11 +75,28 @@ const ProductCard = ({
                 }}
                 className="w-16 p-1 border rounded text-sm"
               />
-              <div className="w-24">
+              <div className="flex-1">
                 <Button
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
+
+                    // 🆕 Ajouter au panier avec CartContext
+                    addToCart(
+                      {
+                        id, // Identifiant unique
+                        productId: id,
+                        name,
+                        price: price || 0,
+                        quantity: qty,
+                      },
+                      supplierId,
+                    );
+
+                    // Afficher une notification
+                    toast.success(`${name} ajouté au panier !`);
+
+                    // Appeler le callback parent si défini
                     onAdd?.(id, qty);
                   }}
                   className="w-full h-full bg-green-600 hover:bg-green-700 text-white py-1 text-xs"
@@ -79,6 +105,13 @@ const ProductCard = ({
                 </Button>
               </div>
             </div>
+
+            {/* 🆕 Badge "Dans le panier" à côté du bouton */}
+            {isInCart && (
+              <span className="bg-blue-500 text-white text-[12px] px-3 py-1 rounded-full font-bold whitespace-nowrap">
+                ✓ {existingItem?.quantity}
+              </span>
+            )}
           </div>
         </CardFooter>
       </Card>

@@ -15,31 +15,84 @@ export async function createOrder(req: Request, res: Response) {
         .json({ message: "products must be a non-empty array" });
     }
 
-    // Récupère les IDs pour vérifier l'existence des produits
-    const productIds = products.map((p: any) => p.id);
-    const foundProducts = await Product.findAll({ where: { id: productIds } });
+    const supplierId = Number(supplier_id);
+    const orderedByUserId = Number(ordered_by_user_id);
 
-    if (foundProducts.length !== productIds.length) {
-      return res
-        .status(400)
-        .json({ message: "One or more products not found" });
+    if (!Number.isInteger(supplierId) || supplierId <= 0) {
+      return res.status(400).json({ message: "Invalid supplier_id" });
+    }
+
+    if (!Number.isInteger(orderedByUserId) || orderedByUserId <= 0) {
+      return res.status(400).json({ message: "Invalid ordered_by_user_id" });
+    }
+
+    // ✅ S'assurer que le fournisseur existe (mock possible)
+    const supplier = await Supplier.findByPk(supplierId);
+    if (!supplier) {
+      await Supplier.create({
+        id: supplierId,
+        name: `Mock Supplier ${supplierId}`,
+        email: `mock-supplier-${supplierId}@restogest.local`,
+        phone: null,
+        address: null,
+      });
     }
 
     const order = await Order.create({
-      ordered_by_user_id,
-      supplier_id,
-      status: "pending",
+      ordered_by_user_id: orderedByUserId,
+      supplier_id: supplierId,
+      status: "ordered",
     });
 
     // Création dynamique des order_items avec la quantité du body
     for (const item of products) {
-      const product = foundProducts.find((p) => p.id === item.id);
+      if (!item?.id || !item?.quantity) {
+        return res
+          .status(400)
+          .json({ message: "Each product needs id and quantity" });
+      }
+
+      const numericId = Number(item.id);
+      let product: Product | null = null;
+
+      // 1) Si l'ID est numérique et existe en DB, on l'utilise
+      if (Number.isInteger(numericId) && numericId > 0) {
+        product = await Product.findByPk(numericId);
+      }
+
+      // 2) Sinon, on cherche via un SKU généré (cas produits mock)
+      if (!product) {
+        const supplierKey = supplier_id ?? "unknown";
+        const sku = `MOCK-${supplierKey}-${item.id}`;
+        product = await Product.findOne({ where: { sku } });
+
+        if (!product) {
+          const salePrice =
+            typeof item.price === "number"
+              ? item.price
+              : Number(item.price ?? 0);
+          const vatRate =
+            typeof item.vat_rate === "number"
+              ? item.vat_rate
+              : Number(item.vat_rate ?? 20);
+
+          product = await Product.create({
+            name: item.name ?? `Produit ${item.id}`,
+            sku,
+            barcode: null,
+            sale_price: Number.isNaN(salePrice) ? 0 : salePrice,
+            vat_rate: Number.isNaN(vatRate) ? 20 : vatRate,
+            is_en_stock: true,
+          });
+        }
+      }
+
       await OrderItem.create({
         order_id: order.id,
-        product_id: item.id,
+        product_id: product.id,
         quantity: item.quantity,
-        unit_price: product?.sale_price,
-        vat_rate: product?.vat_rate,
+        unit_price: product.sale_price,
+        vat_rate: product.vat_rate,
       });
     }
 
@@ -104,13 +157,7 @@ export async function updateOrderStatus(req: Request, res: Response) {
       return res.status(400).json({ message: "Invalid id" });
     }
 
-    const validStatuses = [
-      "draft",
-      "pending",
-      "received",
-      "canceled",
-      "ordered",
-    ];
+    const validStatuses = ["draft", "ordered", "received", "cancelled"];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ message: "Invalid status value" });
     }

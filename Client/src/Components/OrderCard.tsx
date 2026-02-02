@@ -13,14 +13,31 @@ const statusColor = (s?: Order["status"]) =>
   s === "confirmed"
     ? "bg-green-100 text-green-800"
     : s === "shipped"
-    ? "bg-blue-100 text-blue-800"
-    : s === "delivered"
-    ? "bg-indigo-100 text-indigo-800"
-    : s === "cancelled"
-    ? "bg-red-100 text-red-800"
-    : "bg-yellow-100 text-yellow-800";
+      ? "bg-blue-100 text-blue-800"
+      : s === "delivered"
+        ? "bg-indigo-100 text-indigo-800"
+        : s === "cancelled"
+          ? "bg-red-100 text-red-800"
+          : "bg-yellow-100 text-yellow-800";
 
 const OrderCard = ({ order }: { order: Order }) => {
+  // ✅ Formater la date avec l'heure
+  const formatDateTime = (dateStr?: string) => {
+    if (!dateStr) return "—";
+    try {
+      const date = new Date(dateStr);
+      return date.toLocaleString("fr-FR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch {
+      return dateStr;
+    }
+  };
+
   return (
     <article className="border rounded-lg p-3 w-72 hover:shadow-md transition-colors bg-white">
       <div className="flex justify-between items-start gap-2">
@@ -28,11 +45,11 @@ const OrderCard = ({ order }: { order: Order }) => {
           <h3 className="text-sm font-semibold">
             {order.supplier ?? "Fournisseur inconnu"}
           </h3>
-          <p className="text-xs text-gray-500">{order.date ?? "—"}</p>
+          <p className="text-xs text-gray-500">{formatDateTime(order.date)}</p>
         </div>
         <span
           className={`text-xs px-2 py-1 rounded-full ${statusColor(
-            order.status
+            order.status,
           )}`}
         >
           {order.status ?? "pending"}

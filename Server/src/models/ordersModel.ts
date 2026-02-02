@@ -20,7 +20,7 @@ export class Order extends Model<
   declare id: CreationOptional<number>;
   declare supplier_id: ForeignKey<Supplier["id"]>;
   declare ordered_by_user_id: ForeignKey<User["id"]>;
-  declare status: "draft" | "pending" | "received" | "canceled" | "ordered";
+  declare status: "draft" | "ordered" | "received" | "cancelled";
   declare ordered_at: Date | null;
   declare received_at: Date | null;
   declare createdAt: CreationOptional<Date>;
@@ -35,13 +35,7 @@ Order.init(
     supplier_id: { type: DataTypes.INTEGER, allowNull: false },
     ordered_by_user_id: { type: DataTypes.INTEGER, allowNull: true },
     status: {
-      type: DataTypes.ENUM(
-        "draft",
-        "received",
-        "ordered",
-        "canceled",
-        "pending"
-      ),
+      type: DataTypes.ENUM("draft", "ordered", "received", "cancelled"),
       allowNull: false,
       defaultValue: "draft",
     },
@@ -66,6 +60,6 @@ Order.init(
     modelName: "Order",
     underscored: true,
     timestamps: true,
-  }
+  },
 );
 // doit afficher true

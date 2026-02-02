@@ -38,15 +38,52 @@ const OrdersPage = () => {
     setLoading(true);
     setError("");
 
-    fetch("/api/orders")
+    fetch("http://127.0.0.1:4000/api/orders", {
+      credentials: "include",
+    })
       .then(async (res) => {
         if (!res.ok) throw new Error(`Erreur ${res.status}`);
         return res.json();
       })
-      .then((data: Order[]) => setOrders(data))
-      .catch(() => setOrders(mockOrders))
+      .then((data: any[]) => {
+        // ✅ Transformer les commandes de la BD en format Order
+        const transformedOrders: Order[] = data.map((order) => ({
+          id: String(order.id),
+          supplier: order.Supplier?.name || "Fournisseur inconnu",
+          items: order.OrderItems?.length || 0,
+          total:
+            order.OrderItems?.reduce(
+              (sum: number, item: any) =>
+                sum + (item.unit_price * item.quantity || 0),
+              0,
+            ) || 0,
+          status: mapStatus(order.status),
+          date: order.createdAt,
+        }));
+        setOrders(transformedOrders);
+      })
+      .catch(() => {
+        console.warn("Utilisation des mock orders");
+        setOrders(mockOrders);
+      })
       .finally(() => setLoading(false));
   }, []);
+
+  // ✅ Mapper les statuts DB vers l'interface Order
+  function mapStatus(
+    status: string,
+  ): "pending" | "confirmed" | "shipped" | "delivered" | "cancelled" {
+    const statusMap: Record<
+      string,
+      "pending" | "confirmed" | "shipped" | "delivered" | "cancelled"
+    > = {
+      draft: "pending",
+      ordered: "confirmed",
+      received: "delivered",
+      cancelled: "cancelled",
+    };
+    return statusMap[status] || "pending";
+  }
 
   if (loading) return <div className="p-6">Chargement des commandes…</div>;
   if (error) return <div className="p-6 text-red-600">{error}</div>;
