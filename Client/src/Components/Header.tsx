@@ -6,12 +6,12 @@ import CartIcon from "@/Components/CartIcon"; // 🆕
 const Header = () => {
   return (
     <header>
-      <div className="flex items-center justify-between px-15 py-2 bg-white border-b-1 border-gray-200">
-        <div className="flex justify-around items-center gap-2">
-          <SloganIcon className="w-6 h-6" />
+      <div className="flex items-center justify-between px-6 py-1 bg-white border-b-1 border-gray-200">
+        <div className="flex items-center gap-1">
+          <SloganIcon className="w-5 h-5" />
           <div>
-            <h1 className="text-sm font-bold">RestoGest</h1>
-            <p className="text-[8px] text-gray-500">
+            <h1 className="text-xs font-bold">RestoGest</h1>
+            <p className="text-[7px] text-gray-500">
               Votre assistant de cuisine professionnelle
             </p>
           </div>

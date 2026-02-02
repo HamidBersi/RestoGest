@@ -14,10 +14,13 @@ import CartPage from "./Pages/CartPage"; // 🆕
 import Navbar from "./Components/Navbar"; // 🆕
 import OrdersPage from "./Pages/OrdersPage"; // 🆕
 import OrderDetailsPage from "./Pages/OrderDetailsPage"; // 🆕
+import SettingsPage from "./Pages/SettingsPage"; // 🆕
 
 export default function App() {
   const location = useLocation();
-  const hideNavbar = location.pathname === "/home";
+  const hideNavbar = ["/home", "/", "/login", "/register"].includes(
+    location.pathname,
+  );
 
   return (
     <>
@@ -44,6 +47,7 @@ export default function App() {
             <Route path="/orders" element={<OrdersPage />} /> {/* 🆕 */}
             <Route path="/orders/:id" element={<OrderDetailsPage />} />{" "}
             {/* 🆕 */}
+            <Route path="/settings" element={<SettingsPage />} /> {/* 🆕 */}
           </Routes>
         </CartProvider>
       </UserProvider>
