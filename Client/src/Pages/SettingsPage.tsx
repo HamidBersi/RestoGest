@@ -162,7 +162,9 @@ const SettingsPage = () => {
 
         {/* Mot de passe */}
         <div className="bg-white rounded-lg border p-4">
-          <h2 className="font-semibold text-sm mb-3">Changer le mot de passe</h2>
+          <h2 className="font-semibold text-sm mb-3">
+            Changer le mot de passe
+          </h2>
           <div className="space-y-3">
             <div>
               <label className="block text-xs font-medium text-gray-700 mb-1">
@@ -208,7 +210,9 @@ const SettingsPage = () => {
 
       {/* Infos supplémentaires */}
       <div className="bg-blue-50 rounded-lg border border-blue-200 p-4 mt-6">
-        <h3 className="font-semibold text-sm text-blue-900 mb-2">Informations</h3>
+        <h3 className="font-semibold text-sm text-blue-900 mb-2">
+          Informations
+        </h3>
         <p className="text-xs text-blue-800">
           Vous êtes connecté en tant que <strong>{user.role}</strong>
         </p>
